@@ -75,4 +75,7 @@ object TaBritaDimens {
     val shimmerMetaHeight = 12.dp
     val shimmerMetaWidthShort = 60.dp
     val shimmerMetaWidthMedium = 80.dp
+
+    // Detail 2-pane sidebar
+    val detailSidebarWidth = 300.dp
 }

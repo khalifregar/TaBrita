@@ -172,7 +172,7 @@ fun ArticleDetailScreen(
                 if (state.relatedArticles.isNotEmpty()) {
                     Column(
                         modifier = Modifier
-                            .width(300.dp)
+                            .width(TaBritaDimens.detailSidebarWidth)
                             .verticalScroll(rememberScrollState())
                             .padding(start = TaBritaDimens.paddingSmall)
                     ) {
