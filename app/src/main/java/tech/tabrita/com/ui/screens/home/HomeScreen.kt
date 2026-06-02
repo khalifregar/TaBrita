@@ -46,6 +46,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import tech.tabrita.com.ui.theme.TaBritaColors
+import tech.tabrita.com.ui.theme.TaBritaDimens
+import tech.tabrita.com.R
 import coil3.compose.AsyncImage
 import tech.tabrita.com.domain.model.Category
 import tech.tabrita.com.ui.components.ArticleCard
@@ -79,8 +83,8 @@ fun HomeScreen(
                 actions = {
                     Box(
                         modifier = Modifier
-                            .padding(end = 12.dp)
-                            .size(36.dp)
+                            .padding(end = TaBritaDimens.paddingSmall)
+                            .size(TaBritaDimens.smallAvatarSize)
                             .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.surfaceVariant)
                             .clickable { /* Profile quick action */ },
@@ -88,7 +92,7 @@ fun HomeScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Person,
-                            contentDescription = "Profile",
+                            contentDescription = stringResource(R.string.home_profile),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -109,18 +113,18 @@ fun HomeScreen(
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 24.dp)
+                contentPadding = PaddingValues(bottom = TaBritaDimens.paddingLarge)
             ) {
                 // Greeting
                 item {
-                    Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                    Column(modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)) {
                         Text(
-                            text = "Selamat pagi,",
+                            text = stringResource(R.string.home_greeting_morning),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            text = "Pembaca Setia",
+                            text = stringResource(R.string.home_reader_title),
                             style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
                         )
                     }
@@ -130,15 +134,15 @@ fun HomeScreen(
                 item {
                     Box(
                         modifier = Modifier
-                            .padding(horizontal = 20.dp, vertical = 12.dp)
+                            .padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingMedium)
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(16.dp))
+                            .clip(RoundedCornerShape(TaBritaDimens.cornerLarge))
                             .background(MaterialTheme.colorScheme.surfaceVariant)
                             .clickable { onNavigateToExplore() }
-                            .padding(16.dp)
+                            .padding(TaBritaDimens.paddingMedium)
                     ) {
                         Text(
-                            text = "🔍  Cari berita, topik, atau sumber favoritmu...",
+                            text = stringResource(R.string.home_search_hint),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -149,9 +153,9 @@ fun HomeScreen(
                 if (state.featuredArticles.isNotEmpty()) {
                     item {
                         Text(
-                            text = "Pilihan Editor",
+                            text = stringResource(R.string.home_editor_picks),
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                            modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)
                         )
                     }
 
@@ -160,11 +164,11 @@ fun HomeScreen(
 
                         androidx.compose.foundation.layout.BoxWithConstraints {
                             // Adaptive height: larger on bigger screens, clamped for phones
-                            val heroHeight = (maxHeight * 0.42f).coerceIn(180.dp, 320.dp)
+                            val heroHeight = (maxHeight * 0.42f).coerceIn(TaBritaDimens.heroImageHeightMin, TaBritaDimens.heroImageHeightMax)
                             HorizontalPager(
                                 state = pagerState,
-                                contentPadding = PaddingValues(horizontal = 20.dp),
-                                pageSpacing = 12.dp,
+                                contentPadding = PaddingValues(horizontal = TaBritaDimens.paddingLarge),
+                                pageSpacing = TaBritaDimens.paddingSmall,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(heroHeight)
@@ -184,15 +188,15 @@ fun HomeScreen(
                 // Categories
                 item {
                     Text(
-                        text = "Kategori",
+                        text = stringResource(R.string.home_categories),
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
-                        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 8.dp)
+                        modifier = Modifier.padding(start = TaBritaDimens.paddingLarge, end = TaBritaDimens.paddingLarge, bottom = TaBritaDimens.paddingXSmall)
                     )
 
                     val categories = Category.entries.toList()
                     LazyRow(
-                        contentPadding = PaddingValues(horizontal = 20.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        contentPadding = PaddingValues(horizontal = TaBritaDimens.paddingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.paddingXSmall)
                     ) {
                         items(categories) { category ->
                             CategoryChip(
@@ -210,7 +214,7 @@ fun HomeScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 20.dp),
+                            .padding(horizontal = TaBritaDimens.paddingLarge),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -219,14 +223,14 @@ fun HomeScreen(
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold)
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
                 }
 
                 if (state.isLoading) {
                     items(4) {
                         ShimmerArticleCard(
                             modifier = Modifier
-                                .padding(horizontal = 20.dp, vertical = 8.dp)
+                                .padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)
                         )
                     }
                 } else {
@@ -237,7 +241,7 @@ fun HomeScreen(
                             onBookmarkClick = { viewModel.toggleBookmark(it) },
                             isBookmarked = article.id in state.bookmarkedIds,
                             modifier = Modifier
-                                .padding(horizontal = 20.dp, vertical = 8.dp)
+                                .padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)
                         )
                     }
                 }
@@ -254,7 +258,7 @@ private fun FeaturedHeroCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(24.dp))
+            .clip(RoundedCornerShape(TaBritaDimens.cornerXLarge))
             .clickable(onClick = onClick)
     ) {
         AsyncImage(
@@ -272,8 +276,8 @@ private fun FeaturedHeroCard(
                     Brush.verticalGradient(
                         colors = listOf(
                             Color.Transparent,
-                            Color.Black.copy(alpha = 0.35f),
-                            Color.Black.copy(alpha = 0.85f)
+                            TaBritaColors.OverlayDark,
+                            TaBritaColors.OverlayDarkest
                         ),
                         startY = 40f
                     )
@@ -283,27 +287,27 @@ private fun FeaturedHeroCard(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(20.dp)
+                .padding(TaBritaDimens.paddingLarge)
         ) {
             CategoryChip(category = article.category)
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
 
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.headlineSmall.copy(
-                    color = Color.White,
+                    color = TaBritaColors.TextOnDarkPrimary,
                     fontWeight = FontWeight.Bold
                 ),
                 maxLines = 3
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
 
             Text(
                 text = "${article.source} • ${article.timeAgo}",
                 style = MaterialTheme.typography.labelLarge,
-                color = Color.White.copy(alpha = 0.8f)
+                color = TaBritaColors.TextOnDarkSecondary
             )
         }
     }

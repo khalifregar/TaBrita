@@ -42,6 +42,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import androidx.compose.ui.res.stringResource
+import tech.tabrita.com.ui.theme.TaBritaColors
+import tech.tabrita.com.ui.theme.TaBritaDimens
+import tech.tabrita.com.R
 import tech.tabrita.com.domain.model.Article
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -73,11 +77,11 @@ fun ArticleCard(
                     onClick()
                 }
             },
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(TaBritaDimens.cornerXLarge),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = TaBritaDimens.elevationSmall)
     ) {
         Column {
             // Hero image with gradient overlay + category badge
@@ -92,7 +96,7 @@ fun ArticleCard(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .matchParentSize()
-                        .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+                        .clip(RoundedCornerShape(topStart = TaBritaDimens.cornerXLarge, topEnd = TaBritaDimens.cornerXLarge))
                 )
 
                 // Beautiful gradient for text readability
@@ -103,7 +107,7 @@ fun ArticleCard(
                             Brush.verticalGradient(
                                 colors = listOf(
                                     Color.Transparent,
-                                    Color.Black.copy(alpha = 0.65f)
+                                    TaBritaColors.OverlayDarker
                                 ),
                                 startY = 80f
                             )
@@ -115,7 +119,7 @@ fun ArticleCard(
                     category = article.category,
                     modifier = Modifier
                         .align(Alignment.TopStart)
-                        .padding(12.dp)
+                        .padding(TaBritaDimens.paddingSmall)
                 )
 
                 // Bookmark button
@@ -123,18 +127,18 @@ fun ArticleCard(
                     onClick = { onBookmarkClick(article.id) },
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(4.dp)
-                        .size(40.dp)
+                        .padding(TaBritaDimens.paddingTiny)
+                        .size(TaBritaDimens.bookmarkIconSize)
                         .background(
-                            color = Color.Black.copy(alpha = 0.35f),
-                            shape = RoundedCornerShape(12.dp)
+                            color = TaBritaColors.OverlayDark,
+                            shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
                         )
                 ) {
                     Icon(
                         imageVector = if (isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                         contentDescription = "Bookmark",
-                        tint = if (isBookmarked) MaterialTheme.colorScheme.primary else Color.White,
-                        modifier = Modifier.size(20.dp)
+                        tint = if (isBookmarked) MaterialTheme.colorScheme.primary else TaBritaColors.TextOnDarkPrimary,
+                        modifier = Modifier.size(TaBritaDimens.iconSizeSmall)
                     )
                 }
 
@@ -142,30 +146,30 @@ fun ArticleCard(
                 Row(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(12.dp),
+                        .padding(TaBritaDimens.paddingSmall),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = article.source,
                         style = MaterialTheme.typography.labelMedium,
-                        color = Color.White.copy(alpha = 0.95f)
+                        color = TaBritaColors.TextOnDarkSecondary
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.width(TaBritaDimens.smallGap))
                     Text(
                         text = "•",
-                        color = Color.White.copy(alpha = 0.6f)
+                        color = TaBritaColors.TextOnDarkTertiary
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
+                    Spacer(modifier = Modifier.width(TaBritaDimens.smallGap))
                     Text(
                         text = article.timeAgo,
                         style = MaterialTheme.typography.labelMedium,
-                        color = Color.White.copy(alpha = 0.85f)
+                        color = TaBritaColors.TextOnDarkSecondary
                     )
                 }
             }
 
             // Content area
-            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
+            Column(modifier = Modifier.padding(horizontal = TaBritaDimens.paddingMedium, vertical = TaBritaDimens.paddingSmall)) {
                 Text(
                     text = article.title,
                     style = MaterialTheme.typography.headlineSmall,
@@ -174,7 +178,7 @@ fun ArticleCard(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
 
                 Text(
                     text = article.description,
@@ -184,18 +188,18 @@ fun ArticleCard(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingSmall))
 
                 // Meta row
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.paddingXSmall)
                 ) {
                     Icon(
                         imageVector = Icons.Default.AccessTime,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(14.dp)
+                        modifier = Modifier.size(TaBritaDimens.paddingXSmall)
                     )
                     Text(
                         text = stringResource(tech.tabrita.com.R.string.detail_read_time, article.readTimeMinutes),

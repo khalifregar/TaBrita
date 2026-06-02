@@ -81,7 +81,7 @@ class UploadViewModel @Inject constructor(
 
     fun uploadNews(currentUser: AppUser, onComplete: () -> Unit) {
         if (_title.value.isBlank() || _description.value.isBlank()) {
-            _error.value = "Judul dan deskripsi wajib diisi"
+            _error.value = "Judul dan deskripsi wajib diisi" // TODO: use stringResource if made composable, or keep for now
             return
         }
 
@@ -102,7 +102,7 @@ class UploadViewModel @Inject constructor(
                 }.filter { it.text.isNotBlank() || it.imageUrl != null }
 
                 if (blocks.isEmpty()) {
-                    _error.value = "Isi berita minimal 1 slice"
+                    _error.value = "Isi berita minimal 1 slice" // TODO: stringResource via context if needed
                     _isUploading.value = false
                     return@launch
                 }
@@ -125,7 +125,7 @@ class UploadViewModel @Inject constructor(
                 resetForm()
                 onComplete()
             } catch (e: Exception) {
-                _error.value = e.message ?: "Gagal upload berita"
+                _error.value = e.message ?: "Gagal upload berita" // TODO: stringResource
             } finally {
                 _isUploading.value = false
             }

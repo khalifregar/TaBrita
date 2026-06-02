@@ -29,6 +29,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import tech.tabrita.com.ui.theme.TaBritaDimens
 
 @Composable
 fun ShimmerArticleCard(modifier: Modifier = Modifier) {
@@ -57,7 +58,7 @@ fun ShimmerArticleCard(modifier: Modifier = Modifier) {
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(TaBritaDimens.cornerXLarge),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column {
@@ -68,59 +69,59 @@ fun ShimmerArticleCard(modifier: Modifier = Modifier) {
                     .background(brush)
             )
 
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(TaBritaDimens.paddingMedium)) {
                 // Title lines
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                         .height(20.dp)
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.65f)
                         .height(20.dp)
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingSmall))
 
                 // Description
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(14.dp)
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingTiny))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.7f)
                         .height(14.dp)
-                        .clip(RoundedCornerShape(4.dp))
+                        .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
 
-                Spacer(modifier = Modifier.height(14.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingSmall))
 
                 Row {
                     Box(
                         modifier = Modifier
                             .width(80.dp)
                             .height(12.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                             .background(brush)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(TaBritaDimens.paddingXSmall))
                     Box(
                         modifier = Modifier
                             .width(60.dp)
                             .height(12.dp)
-                            .clip(RoundedCornerShape(4.dp))
+                            .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                             .background(brush)
                     )
                 }

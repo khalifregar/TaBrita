@@ -23,6 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import tech.tabrita.com.ui.theme.TaBritaDimens
+import tech.tabrita.com.R
 import tech.tabrita.com.domain.model.Category
 import tech.tabrita.com.ui.components.ArticleCard
 import tech.tabrita.com.ui.components.CategoryChip
@@ -62,15 +65,15 @@ fun ExploreScreen(
                 query = state.searchQuery,
                 onQueryChange = viewModel::onSearchQueryChange,
                 placeholder = "Cari berita, topik, atau sumber…",
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)
+                modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingMedium)
             )
 
             // Category filters
             val categories = Category.entries.toList()
             LazyRow(
-                contentPadding = PaddingValues(horizontal = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(bottom = 8.dp)
+                contentPadding = PaddingValues(horizontal = TaBritaDimens.paddingLarge),
+                horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.paddingXSmall),
+                modifier = Modifier.padding(bottom = TaBritaDimens.paddingXSmall)
             ) {
                 items(categories) { cat ->
                     CategoryChip(
@@ -81,13 +84,13 @@ fun ExploreScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
 
             if (state.isLoading) {
                 LazyColumn {
                     items(5) {
                         ShimmerArticleCard(
-                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                            modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)
                         )
                     }
                 }
@@ -95,7 +98,7 @@ fun ExploreScreen(
                 EmptySearchResult(query = state.searchQuery)
             } else {
                 LazyColumn(
-                    contentPadding = PaddingValues(bottom = 100.dp)
+                    contentPadding = PaddingValues(bottom = TaBritaDimens.paddingContentBottom)
                 ) {
                     items(state.filteredArticles, key = { it.id }) { article ->
                         ArticleCard(
@@ -103,7 +106,7 @@ fun ExploreScreen(
                             onClick = { onArticleClick(article.id) },
                             onBookmarkClick = { viewModel.toggleBookmark(it) },
                             isBookmarked = article.id in state.bookmarkedIds,
-                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                            modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)
                         )
                     }
                 }
@@ -117,7 +120,7 @@ private fun EmptySearchResult(query: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp),
+            .padding(TaBritaDimens.paddingXXLarge),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
     ) {
@@ -125,14 +128,14 @@ private fun EmptySearchResult(query: String) {
             text = "😕",
             style = MaterialTheme.typography.displayMedium
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(TaBritaDimens.paddingMedium))
         Text(
             text = if (query.isNotBlank())
                 "Tidak ada hasil untuk \"$query\""
             else "Tidak ada artikel",
             style = MaterialTheme.typography.titleMedium
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
         Text(
             text = "Coba kata kunci lain atau pilih kategori berbeda",
             style = MaterialTheme.typography.bodyMedium,

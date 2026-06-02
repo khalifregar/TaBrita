@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import tech.tabrita.com.ui.theme.TaBritaDimens
 
 @Composable
 fun TaBritaSearchBar(
@@ -38,13 +39,13 @@ fun TaBritaSearchBar(
         modifier = modifier
             .fillMaxWidth()
             .height(52.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(TaBritaDimens.cornerLarge))
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = TaBritaDimens.paddingMedium),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -68,7 +69,7 @@ fun TaBritaSearchBar(
                 ),
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 12.dp, end = 8.dp),
+                    .padding(start = TaBritaDimens.paddingSmall, end = TaBritaDimens.paddingXSmall),
                 decorationBox = { innerTextField ->
                     if (query.isEmpty()) {
                         Text(

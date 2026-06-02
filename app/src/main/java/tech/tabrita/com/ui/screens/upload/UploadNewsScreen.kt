@@ -21,9 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import tech.tabrita.com.ui.theme.TaBritaColors
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import tech.tabrita.com.ui.theme.TaBritaDimens
+import tech.tabrita.com.R
 import coil3.compose.AsyncImage
 import tech.tabrita.com.data.auth.AppUser
 
@@ -53,7 +57,7 @@ fun UploadNewsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Upload Berita Baru", fontWeight = FontWeight.SemiBold) },
+                title = { Text(stringResource(R.string.upload_title), fontWeight = FontWeight.SemiBold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
                 )
@@ -64,35 +68,35 @@ fun UploadNewsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(horizontal = TaBritaDimens.paddingLarge),
+            verticalArrangement = Arrangement.spacedBy(TaBritaDimens.paddingMedium)
         ) {
             item {
-                Spacer(Modifier.height(8.dp))
-                Text("Judul Berita", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                Spacer(Modifier.height(TaBritaDimens.paddingXSmall))
+                Text(stringResource(R.string.upload_news_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
                 OutlinedTextField(
                     value = title,
                     onValueChange = viewModel::updateTitle,
-                    placeholder = { Text("Masukkan judul yang menarik...") },
+                    placeholder = { Text(stringResource(R.string.upload_news_title_placeholder)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
                 )
             }
 
             item {
-                Text("Deskripsi Singkat", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.upload_description), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
                 OutlinedTextField(
                     value = description,
                     onValueChange = viewModel::updateDescription,
-                    placeholder = { Text("Ringkasan berita dalam 1-2 kalimat...") },
-                    modifier = Modifier.fillMaxWidth().height(90.dp),
-                    shape = RoundedCornerShape(12.dp)
+                    placeholder = { Text(stringResource(R.string.upload_description_placeholder)) },
+                    modifier = Modifier.fillMaxWidth().heightIn(min = TaBritaDimens.paddingXXLarge * 3),
+                    shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
                 )
             }
 
             item {
-                Text("Kategori", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.upload_category), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
                 var expanded by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
                     expanded = expanded,
@@ -104,7 +108,7 @@ fun UploadNewsScreen(
                         readOnly = true,
                         modifier = Modifier.fillMaxWidth().menuAnchor(),
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
                     )
                     ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                         categories.forEach { cat ->
@@ -121,13 +125,13 @@ fun UploadNewsScreen(
             }
 
             item {
-                Text("Thumbnail Utama", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.upload_thumbnail), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(180.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                        .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(16.dp))
+                        .height(TaBritaDimens.cardImageHeightLarge)
+                        .clip(RoundedCornerShape(TaBritaDimens.cornerLarge))
+                        .border(TaBritaDimens.borderWidth, MaterialTheme.colorScheme.outline, RoundedCornerShape(TaBritaDimens.cornerLarge))
                         .background(MaterialTheme.colorScheme.surfaceVariant)
                         .clickable { thumbnailPicker.launch("image/*") },
                     contentAlignment = Alignment.Center
@@ -141,16 +145,16 @@ fun UploadNewsScreen(
                         )
                         IconButton(
                             onClick = { viewModel.setThumbnail(Uri.EMPTY) },
-                            modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
-                                .background(Color.Black.copy(0.5f), RoundedCornerShape(50))
+                            modifier = Modifier.align(Alignment.TopEnd).padding(TaBritaDimens.paddingXSmall)
+                                .background(TaBritaColors.OverlayDark, RoundedCornerShape(TaBritaDimens.cornerPill))
                         ) {
-                            Icon(Icons.Default.Close, contentDescription = "Hapus", tint = Color.White)
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.upload_remove_slice), tint = TaBritaColors.TextOnDarkPrimary)
                         }
                     } else {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Icon(Icons.Default.Image, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(42.dp))
-                            Spacer(Modifier.height(8.dp))
-                            Text("Pilih Thumbnail", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(Icons.Default.Image, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(TaBritaDimens.iconSizeLarge))
+                            Spacer(Modifier.height(TaBritaDimens.paddingXSmall))
+                            Text(stringResource(R.string.upload_choose_thumbnail), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -162,11 +166,11 @@ fun UploadNewsScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Isi Berita (Slice)", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
-                    FilledTonalButton(onClick = viewModel::addSlice, shape = RoundedCornerShape(50)) {
-                        Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(6.dp))
-                        Text("Tambah Slice")
+                    Text(stringResource(R.string.upload_content_slices), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                    FilledTonalButton(onClick = viewModel::addSlice, shape = RoundedCornerShape(TaBritaDimens.cornerPill)) {
+                        Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(TaBritaDimens.iconSizeSmall))
+                        Spacer(Modifier.width(TaBritaDimens.paddingXSmall))
+                        Text(stringResource(R.string.upload_add_slice))
                     }
                 }
             }
@@ -182,25 +186,25 @@ fun UploadNewsScreen(
 
             item {
                 if (error != null) {
-                    Text(error!!, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(vertical = 8.dp))
+                    Text(error!!, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(vertical = TaBritaDimens.paddingXSmall))
                 }
 
                 Button(
                     onClick = { viewModel.uploadNews(currentUser, onUploadSuccess) },
                     enabled = !isUploading && title.isNotBlank() && description.isNotBlank(),
-                    modifier = Modifier.fillMaxWidth().height(56.dp),
-                    shape = RoundedCornerShape(16.dp)
+                    modifier = Modifier.fillMaxWidth().height(TaBritaDimens.buttonHeight),
+                    shape = RoundedCornerShape(TaBritaDimens.cornerLarge)
                 ) {
                     if (isUploading) {
-                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp, color = Color.White)
-                        Spacer(Modifier.width(12.dp))
-                        Text("Mengupload...")
+                        CircularProgressIndicator(modifier = Modifier.size(TaBritaDimens.iconSizeSmall), strokeWidth = TaBritaDimens.strokeWidth, color = Color.White)
+                        Spacer(Modifier.width(TaBritaDimens.paddingSmall))
+                        Text(stringResource(R.string.upload_uploading))
                     } else {
-                        Text("Publikasikan Berita", fontWeight = FontWeight.SemiBold)
+                        Text(stringResource(R.string.upload_publish), fontWeight = FontWeight.SemiBold)
                     }
                 }
 
-                Spacer(Modifier.height(40.dp))
+                Spacer(Modifier.height(TaBritaDimens.paddingXXLarge))
             }
         }
     }
@@ -219,38 +223,38 @@ private fun UploadSliceCard(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(TaBritaDimens.cornerLarge),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(TaBritaDimens.paddingMedium)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Slice", fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.upload_slice_label), fontWeight = FontWeight.Medium)
                 IconButton(onClick = onRemove) {
-                    Icon(Icons.Default.Close, contentDescription = "Hapus slice", tint = MaterialTheme.colorScheme.error)
+                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.upload_remove_slice), tint = MaterialTheme.colorScheme.error)
                 }
             }
 
             OutlinedTextField(
                 value = slice.text,
                 onValueChange = onTextChange,
-                placeholder = { Text("Tulis paragraf di sini...") },
-                modifier = Modifier.fillMaxWidth().height(110.dp),
-                shape = RoundedCornerShape(12.dp)
+                placeholder = { Text(stringResource(R.string.upload_slice_text_placeholder)) },
+                modifier = Modifier.fillMaxWidth().heightIn(min = TaBritaDimens.paddingXXXLarge * 2),
+                shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
             )
 
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(TaBritaDimens.paddingSmall))
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(140.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .height(TaBritaDimens.cardImageHeightMedium)
+                    .clip(RoundedCornerShape(TaBritaDimens.cornerMedium))
                     .background(MaterialTheme.colorScheme.surfaceVariant)
-                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
+                    .border(TaBritaDimens.borderWidth, MaterialTheme.colorScheme.outline, RoundedCornerShape(TaBritaDimens.cornerMedium))
                     .clickable { imagePicker.launch("image/*") },
                 contentAlignment = Alignment.Center
             ) {
@@ -264,7 +268,7 @@ private fun UploadSliceCard(
                 } else {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(Icons.Default.Image, null, tint = MaterialTheme.colorScheme.primary)
-                        Text("Pilih Gambar (opsional)", style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(R.string.upload_choose_image_optional), style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }

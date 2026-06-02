@@ -54,4 +54,44 @@
     <string name="action_retry">Coba Lagi</string>
     <string name="loading">Memuat…</string>
     <string name="empty_search">Tidak ada hasil untuk "%1$s"</string>
+
+    <!-- Login -->
+    <string name="login_continue_google">Lanjutkan dengan Google</string>
+
+    <!-- Home -->
+    <string name="home_profile">Profil</string>
+    <string name="home_greeting_morning">Selamat pagi,</string>
+    <string name="home_reader_title">Pembaca Setia</string>
+    <string name="home_search_hint">🔍  Cari berita, topik, atau sumber favoritmu...</string>
+    <string name="home_editor_picks">Pilihan Editor</string>
+    <string name="home_categories">Kategori</string>
+
+    <!-- Detail -->
+    <string name="detail_back">Kembali</string>
+    <string name="detail_share_article">Bagikan artikel</string>
+    <string name="detail_share_body">%1$s\n\n%2$s\n\nBaca selengkapnya di TaBrita</string>
+
+    <!-- Upload (Admin) -->
+    <string name="upload_title">Upload Berita Baru</string>
+    <string name="upload_news_title">Judul Berita</string>
+    <string name="upload_news_title_placeholder">Masukkan judul yang menarik...</string>
+    <string name="upload_description">Deskripsi Singkat</string>
+    <string name="upload_description_placeholder">Ringkasan berita dalam 1-2 kalimat...</string>
+    <string name="upload_category">Kategori</string>
+    <string name="upload_thumbnail">Thumbnail Utama</string>
+    <string name="upload_choose_thumbnail">Pilih Thumbnail</string>
+    <string name="upload_content_slices">Isi Berita (Slice)</string>
+    <string name="upload_add_slice">Tambah Slice</string>
+    <string name="upload_slice_label">Slice</string>
+    <string name="upload_slice_text_placeholder">Tulis paragraf di sini...</string>
+    <string name="upload_choose_image_optional">Pilih Gambar (opsional)</string>
+    <string name="upload_remove_slice">Hapus</string>
+    <string name="upload_publish">Publikasikan Berita</string>
+    <string name="upload_uploading">Mengupload...</string>
+    <string name="upload_error_title_desc">Judul dan deskripsi wajib diisi</string>
+    <string name="upload_error_min_slice">Isi berita minimal 1 slice</string>
+    <string name="upload_error_generic">Gagal upload berita</string>
+
+    <!-- Nav for Admin -->
+    <string name="nav_upload">Upload</string>
 </resources>

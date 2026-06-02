@@ -23,6 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import tech.tabrita.com.ui.theme.TaBritaDimens
+import tech.tabrita.com.R
 import tech.tabrita.com.ui.components.ArticleCard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +62,7 @@ fun BookmarksScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding),
-                contentPadding = PaddingValues(bottom = 24.dp)
+                contentPadding = PaddingValues(bottom = TaBritaDimens.paddingLarge)
             ) {
                 items(state.bookmarkedArticles, key = { it.id }) { article ->
                     ArticleCard(
@@ -67,7 +70,7 @@ fun BookmarksScreen(
                         onClick = { onArticleClick(article.id) },
                         onBookmarkClick = { viewModel.toggleBookmark(it) },
                         isBookmarked = true,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                        modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)
                     )
                 }
             }
@@ -78,17 +81,17 @@ fun BookmarksScreen(
 @Composable
 private fun EmptyBookmarks(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.padding(32.dp),
+        modifier = modifier.padding(TaBritaDimens.paddingXXLarge),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "📖", style = MaterialTheme.typography.displayLarge)
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(TaBritaDimens.paddingLarge))
         Text(
             text = "Belum ada artikel tersimpan",
             style = MaterialTheme.typography.titleMedium
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
         Text(
             text = "Simpan artikel favorit Anda untuk dibaca nanti. Semua artikel yang disimpan akan muncul di sini.",
             style = MaterialTheme.typography.bodyMedium,

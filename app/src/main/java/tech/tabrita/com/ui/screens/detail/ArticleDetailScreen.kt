@@ -50,6 +50,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import tech.tabrita.com.ui.theme.TaBritaColors
+import tech.tabrita.com.ui.theme.TaBritaDimens
+import tech.tabrita.com.R
 import coil3.compose.AsyncImage
 import tech.tabrita.com.ui.components.CategoryChip
 
@@ -78,7 +82,7 @@ fun ArticleDetailScreen(
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Kembali"
+                            contentDescription = stringResource(R.string.detail_back)
                         )
                     }
                 },
@@ -90,24 +94,23 @@ fun ArticleDetailScreen(
                         IconButton(onClick = { viewModel.toggleBookmark() }) {
                             Icon(
                                 imageVector = if (state.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
-                                contentDescription = "Simpan",
+                                contentDescription = stringResource(R.string.detail_bookmark),
                                 tint = if (state.isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                             )
                         }
+                        val shareArticleText = stringResource(R.string.detail_share_article)
+                        val shareBody = stringResource(R.string.detail_share_body, article.title, article.description)
                         IconButton(onClick = {
                             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_SUBJECT, article.title)
-                                putExtra(
-                                    Intent.EXTRA_TEXT,
-                                    "${article.title}\n\n${article.description}\n\nBaca selengkapnya di TaBrita"
-                                )
+                                putExtra(Intent.EXTRA_TEXT, shareBody)
                             }
-                            context.startActivity(Intent.createChooser(shareIntent, "Bagikan artikel"))
+                            context.startActivity(Intent.createChooser(shareIntent, shareArticleText))
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Share,
-                                contentDescription = "Bagikan"
+                                contentDescription = stringResource(R.string.detail_share)
                             )
                         }
                     }
@@ -137,7 +140,7 @@ fun ArticleDetailScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(260.dp)
+                    .height(TaBritaDimens.heroImageHeightDefault)
             ) {
                 AsyncImage(
                     model = article.thumbnailUrl,
@@ -153,8 +156,8 @@ fun ArticleDetailScreen(
                         .background(
                             Brush.verticalGradient(
                                 colors = listOf(
-                                    Color.Black.copy(alpha = 0.15f),
-                                    Color.Black.copy(alpha = 0.75f)
+                                    TaBritaColors.OverlayLight,
+                                    TaBritaColors.OverlayDarkest
                                 ),
                                 startY = 40f
                             )
@@ -165,14 +168,14 @@ fun ArticleDetailScreen(
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
-                        .padding(20.dp)
+                        .padding(TaBritaDimens.paddingLarge)
                 ) {
                     CategoryChip(category = article.category)
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(TaBritaDimens.paddingMedium))
                     Text(
                         text = article.title,
                         style = MaterialTheme.typography.headlineLarge.copy(
-                            color = Color.White,
+                            color = TaBritaColors.TextOnDarkPrimary,
                             fontWeight = FontWeight.Bold
                         )
                     )
@@ -180,7 +183,7 @@ fun ArticleDetailScreen(
             }
 
             // Meta info
-            Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 18.dp)) {
+            Column(modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingLarge)) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -197,7 +200,7 @@ fun ArticleDetailScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
@@ -217,8 +220,8 @@ fun ArticleDetailScreen(
             // Article body - beautiful readable typography with slices/images (modern news style)
             Column(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .padding(bottom = 24.dp)
+                    .padding(horizontal = TaBritaDimens.paddingLarge)
+                    .padding(bottom = TaBritaDimens.paddingLarge)
             ) {
                 article.contentBlocks.forEach { block ->
                     Text(
@@ -228,42 +231,42 @@ fun ArticleDetailScreen(
                         lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.15f
                     )
                     block.imageUrl?.let { imgUrl ->
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(TaBritaDimens.paddingMedium))
                         AsyncImage(
                             model = imgUrl,
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(220.dp)
-                                .clip(RoundedCornerShape(12.dp))
+                                .height(TaBritaDimens.cardImageHeightLarge)
+                                .clip(RoundedCornerShape(TaBritaDimens.cornerMedium))
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(TaBritaDimens.paddingMedium))
                     }
                 }
             }
 
             // Related articles section
             if (state.relatedArticles.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
 
                 Text(
-                    text = "Artikel Terkait",
+                    text = stringResource(R.string.detail_related),
                     style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
                     modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .padding(bottom = 12.dp)
+                        .padding(horizontal = TaBritaDimens.paddingLarge)
+                        .padding(bottom = TaBritaDimens.paddingSmall)
                 )
 
                 androidx.compose.foundation.layout.BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 32.dp)
+                        .padding(bottom = TaBritaDimens.paddingXXLarge)
                 ) {
-                    val cardWidth = (maxWidth * 0.58f).coerceIn(180.dp, 300.dp)
+                    val cardWidth = (maxWidth * 0.58f).coerceIn(TaBritaDimens.relatedCardWidthMin, TaBritaDimens.relatedCardWidthMax)
                     LazyRow(
-                        contentPadding = PaddingValues(horizontal = 20.dp),
-                        horizontalArrangement = Arrangement.spacedBy(14.dp)
+                        contentPadding = PaddingValues(horizontal = TaBritaDimens.paddingLarge),
+                        horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.relatedCardSpacing)
                     ) {
                         items(state.relatedArticles) { related ->
                             RelatedArticleCard(
@@ -281,15 +284,15 @@ fun ArticleDetailScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(TaBritaDimens.paddingLarge),
             contentAlignment = Alignment.BottomEnd
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.fabSpacing)) {
                 FloatingActionButton(
                     onClick = { viewModel.toggleBookmark() },
                     containerColor = MaterialTheme.colorScheme.surface,
                     contentColor = if (state.isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                    elevation = FloatingActionButtonDefaults.elevation(6.dp)
+                    elevation = FloatingActionButtonDefaults.elevation(TaBritaDimens.elevationMedium)
                 ) {
                     Icon(
                         imageVector = if (state.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
@@ -320,12 +323,12 @@ fun ArticleDetailScreen(
 private fun RelatedArticleCard(
     article: tech.tabrita.com.domain.model.Article,
     onClick: () -> Unit,
-    cardWidth: androidx.compose.ui.unit.Dp = 220.dp
+    cardWidth: androidx.compose.ui.unit.Dp = TaBritaDimens.relatedCardWidthDefault
 ) {
     Column(
         modifier = Modifier
             .width(cardWidth)
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(TaBritaDimens.cornerLarge))
             .background(MaterialTheme.colorScheme.surface)
             .clickable(onClick = onClick)
     ) {
@@ -335,18 +338,18 @@ private fun RelatedArticleCard(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp)
-                .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                .height(TaBritaDimens.cardImageHeightSmall)
+                .clip(RoundedCornerShape(topStart = TaBritaDimens.cornerLarge, topEnd = TaBritaDimens.cornerLarge))
         )
 
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(TaBritaDimens.paddingSmall)) {
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.titleSmall,
                 maxLines = 2,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
             Text(
                 text = "${article.source} • ${article.timeAgo}",
                 style = MaterialTheme.typography.labelSmall,

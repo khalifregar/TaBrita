@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import tech.tabrita.com.ui.theme.TaBritaColors
 import androidx.compose.ui.unit.dp
+import tech.tabrita.com.ui.theme.TaBritaDimens
 import tech.tabrita.com.domain.model.Category
 
 @Composable
@@ -25,10 +27,10 @@ fun CategoryChip(
     val bgColor = if (isSelected) {
         MaterialTheme.colorScheme.primary
     } else {
-        Color.Black.copy(alpha = 0.45f)
+        TaBritaColors.OverlayMedium
     }
 
-    val textColor = Color.White
+    val textColor = TaBritaColors.TextOnDarkPrimary
 
     val shape = RoundedCornerShape(50)
 
@@ -37,7 +39,7 @@ fun CategoryChip(
             text = "${category.emoji} ${category.displayName}",
             style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold),
             color = textColor,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+            modifier = Modifier.padding(horizontal = TaBritaDimens.paddingSmall, vertical = TaBritaDimens.paddingXSmall)
         )
     }
 

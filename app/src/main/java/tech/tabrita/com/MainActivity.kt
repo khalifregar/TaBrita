@@ -50,6 +50,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import tech.tabrita.com.ui.theme.TaBritaColors
+import tech.tabrita.com.ui.theme.TaBritaDimens
+import tech.tabrita.com.R
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -91,29 +95,29 @@ private fun LoginScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(32.dp)
+            modifier = Modifier.padding(TaBritaDimens.paddingXXLarge)
         ) {
             Text(
-                "TaBrita",
+                stringResource(R.string.app_name),
                 style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
                 color = MaterialTheme.colorScheme.primary
             )
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(TaBritaDimens.paddingXSmall))
             Text(
-                "Berita yang Menginspirasi",
+                stringResource(R.string.tagline),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            Spacer(Modifier.height(48.dp))
+            Spacer(Modifier.height(TaBritaDimens.paddingXXLarge))
 
             Button(
                 onClick = onSignInClick,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
+                modifier = Modifier.fillMaxWidth().height(TaBritaDimens.buttonHeight),
+                shape = RoundedCornerShape(TaBritaDimens.cornerLarge),
+                colors = ButtonDefaults.buttonColors(containerColor = TaBritaColors.TextOnDarkPrimary, contentColor = TaBritaColors.Background)
             ) {
-                Text("Lanjutkan dengan Google", fontWeight = FontWeight.Medium)
+                Text(stringResource(R.string.login_continue_google), fontWeight = FontWeight.Medium)
             }
         }
     }
@@ -219,7 +223,7 @@ fun TaBritaApp(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .wrapContentWidth(Alignment.CenterHorizontally)
-                .widthIn(max = 720.dp)
+                .widthIn(max = TaBritaDimens.maxContentWidth)
         )
     }
 }
@@ -240,7 +244,7 @@ private fun TaBritaBottomNavigation(
                 Screen.Explore -> stringResource(R.string.nav_explore) to Icons.Default.Search
                 Screen.Bookmarks -> stringResource(R.string.nav_bookmarks) to Icons.Default.Bookmark
                 Screen.Profile -> stringResource(R.string.nav_profile) to Icons.Default.Person
-                Screen.Upload -> "Upload" to Icons.Default.Add // Modern admin action
+                Screen.Upload -> stringResource(R.string.nav_upload) to Icons.Default.Add // Modern admin action
                 else -> "" to Icons.Default.Home
             }
 
