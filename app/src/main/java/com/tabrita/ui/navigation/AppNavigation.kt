@@ -1,6 +1,7 @@
 package com.tabrita.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,11 +14,13 @@ import com.tabrita.ui.screens.profile.ProfileScreen
 
 @Composable
 fun AppNavigation(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Home.route,
+        modifier = modifier
     ) {
         composable(Screen.Home.route) {
             HomeScreen(

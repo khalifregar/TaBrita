@@ -75,7 +75,8 @@ fun TaBritaApp() {
         }
     ) { innerPadding ->
         AppNavigation(
-            navController = navController
+            navController = navController,
+            modifier = Modifier.padding(innerPadding)
         )
     }
 }
