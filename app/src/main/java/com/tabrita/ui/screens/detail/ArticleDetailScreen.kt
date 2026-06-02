@@ -40,6 +40,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -131,6 +133,8 @@ fun ArticleDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .widthIn(max = 720.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             // Hero Image
@@ -240,16 +244,23 @@ fun ArticleDetailScreen(
                         .padding(bottom = 12.dp)
                 )
 
-                LazyRow(
-                    contentPadding = PaddingValues(horizontal = 20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(14.dp),
-                    modifier = Modifier.padding(bottom = 32.dp)
+                androidx.compose.foundation.layout.BoxWithConstraints(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp)
                 ) {
-                    items(state.relatedArticles) { related ->
-                        RelatedArticleCard(
-                            article = related,
-                            onClick = { onRelatedArticleClick(related.id) }
-                        )
+                    val cardWidth = (maxWidth * 0.58f).coerceIn(180.dp, 300.dp)
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 20.dp),
+                        horizontalArrangement = Arrangement.spacedBy(14.dp)
+                    ) {
+                        items(state.relatedArticles) { related ->
+                            RelatedArticleCard(
+                                article = related,
+                                onClick = { onRelatedArticleClick(related.id) },
+                                cardWidth = cardWidth
+                            )
+                        }
                     }
                 }
             }
@@ -297,11 +308,12 @@ fun ArticleDetailScreen(
 @Composable
 private fun RelatedArticleCard(
     article: com.tabrita.domain.model.Article,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    cardWidth: androidx.compose.ui.unit.Dp = 220.dp
 ) {
     Column(
         modifier = Modifier
-            .width(220.dp)
+            .width(cardWidth)
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.surface)
             .clickable(onClick = onClick)

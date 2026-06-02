@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -108,7 +110,10 @@ fun HomeScreen(
                 .padding(padding)
         ) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .widthIn(max = 720.dp),
                 contentPadding = PaddingValues(bottom = 24.dp)
             ) {
                 // Greeting
@@ -158,19 +163,23 @@ fun HomeScreen(
                     item {
                         val pagerState = rememberPagerState(pageCount = { state.featuredArticles.size })
 
-                        HorizontalPager(
-                            state = pagerState,
-                            contentPadding = PaddingValues(horizontal = 20.dp),
-                            pageSpacing = 12.dp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(220.dp)
-                        ) { page ->
-                            val article = state.featuredArticles[page]
-                            FeaturedHeroCard(
-                                article = article,
-                                onClick = { onArticleClick(article.id) }
-                            )
+                        androidx.compose.foundation.layout.BoxWithConstraints {
+                            // Adaptive height: larger on bigger screens, clamped for phones
+                            val heroHeight = (maxHeight * 0.42f).coerceIn(180.dp, 320.dp)
+                            HorizontalPager(
+                                state = pagerState,
+                                contentPadding = PaddingValues(horizontal = 20.dp),
+                                pageSpacing = 12.dp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(heroHeight)
+                            ) { page ->
+                                val article = state.featuredArticles[page]
+                                FeaturedHeroCard(
+                                    article = article,
+                                    onClick = { onArticleClick(article.id) }
+                                )
+                            }
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
