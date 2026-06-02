@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TaBrita</string>
+    <string name="tagline">Berita yang Menginspirasi</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Beranda</string>
+    <string name="nav_explore">Jelajah</string>
+    <string name="nav_bookmarks">Simpan</string>
+    <string name="nav_profile">Profil</string>
+
+    <!-- Home -->
+    <string name="home_greeting">Selamat datang,</string>
+    <string name="home_for_you">Untuk Anda</string>
+    <string name="home_trending">Trending</string>
+    <string name="home_see_all">Lihat Semua</string>
+
+    <!-- Explore -->
+    <string name="explore_title">Jelajahi Topik</string>
+    <string name="search_placeholder">Cari berita, topik, atau sumber…</string>
+
+    <!-- Bookmarks -->
+    <string name="bookmarks_title">Artikel Tersimpan</string>
+    <string name="bookmarks_empty_title">Belum ada artikel tersimpan</string>
+    <string name="bookmarks_empty_desc">Artikel yang Anda simpan akan muncul di sini</string>
+
+    <!-- Detail -->
+    <string name="detail_read_time">%1$d menit baca</string>
+    <string name="detail_share">Bagikan</string>
+    <string name="detail_bookmark">Simpan</string>
+    <string name="detail_bookmarked">Tersimpan</string>
+    <string name="detail_related">Artikel Terkait</string>
+
+    <!-- Categories -->
+    <string name="cat_all">Semua</string>
+    <string name="cat_politik">Politik</string>
+    <string name="cat_teknologi">Teknologi</string>
+    <string name="cat_bisnis">Bisnis</string>
+    <string name="cat_olahraga">Olahraga</string>
+    <string name="cat_hiburan">Hiburan</string>
+    <string name="cat_kesehatan">Kesehatan</string>
+    <string name="cat_sains">Sains</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profil</string>
+    <string name="profile_edit">Edit Profil</string>
+    <string name="profile_theme">Tema</string>
+    <string name="profile_notifications">Notifikasi</string>
+    <string name="profile_about">Tentang TaBrita</string>
+    <string name="profile_version">Versi %1$s</string>
+    <string name="profile_logout">Keluar</string>
+
+    <!-- Common -->
+    <string name="action_retry">Coba Lagi</string>
+    <string name="loading">Memuat…</string>
+    <string name="empty_search">Tidak ada hasil untuk "%1$s"</string>
+</resources>

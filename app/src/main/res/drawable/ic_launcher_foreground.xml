@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:translateX="21.6"
+        android:translateY="21.6">
+        <!-- Modern stylized "T" + book/news icon -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M24,20 L84,20 L84,28 L60,28 L60,88 L48,88 L48,28 L24,28 Z" />
+        <!-- Accent line -->
+        <path
+            android:fillColor="#E94560"
+            android:pathData="M30,40 L78,40 L78,44 L30,44 Z" />
+        <path
+            android:fillColor="#E94560"
+            android:pathData="M30,52 L78,52 L78,56 L30,56 Z" />
+        <path
+            android:fillColor="#E94560"
+            android:pathData="M30,64 L65,64 L65,68 L30,68 Z" />
+    </group>
+</vector>
