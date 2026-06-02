@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
-    // alias(libs.plugins.googleServices)  // Uncomment after adding real google-services.json from Firebase
+    alias(libs.plugins.googleServices)
 }
 
 android {

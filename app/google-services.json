@@ -1,28 +1,28 @@
 {
   "project_info": {
-    "project_number": "000000000000",
-    "project_id": "tabrita-demo",
-    "storage_bucket": "tabrita-demo.appspot.com"
+    "project_number": "786698668763",
+    "project_id": "tabrita",
+    "storage_bucket": "tabrita.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+        "mobilesdk_app_id": "1:786698668763:android:25f53ed8bff31dc6145afe",
         "android_client_info": {
-          "package_name": "com.tabrita"
+          "package_name": "tech.tabrita.com"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "000000000000-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDummyKeyForBuildOnly1234567890"
+          "current_key": "AIzaSyBrGMFRjruSnkDIMQnuno91fD0gISA3ZtY"
         }
-      ]
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"

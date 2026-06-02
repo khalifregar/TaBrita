@@ -2,8 +2,10 @@ package tech.tabrita.com
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -40,6 +42,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,6 +54,10 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import tech.tabrita.com.data.auth.AppUser
 import tech.tabrita.com.ui.auth.AuthViewModel
 import tech.tabrita.com.ui.navigation.AppNavigation
@@ -74,7 +81,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun LoginScreen(
-    onGoogleSignIn: (String) -> Unit
+    onSignInClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -101,10 +108,7 @@ private fun LoginScreen(
             Spacer(Modifier.height(48.dp))
 
             Button(
-                onClick = {
-                    // TODO: Implement real Google Sign In + Firebase
-                    onGoogleSignIn("DEMO_TOKEN")
-                },
+                onClick = onSignInClick,
                 modifier = Modifier.fillMaxWidth().height(56.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
@@ -125,6 +129,39 @@ fun TaBritaApp(
 
     val currentUser by authViewModel.currentUser.collectAsState()
     val isLoading by authViewModel.isLoading.collectAsState()
+
+    val context = androidx.compose.ui.platform.LocalContext.current
+
+    // Create GoogleSignInClient 
+    // IMPORTANT: After adding real google-services.json (with OAuth web client), it generates R.string.default_web_client_id
+    // For now using placeholder - replace with real Web client ID from Firebase console (Authentication > Sign-in method > Google > Web SDK)
+    val gso = remember {
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("786698668763-abc123def456ghi789jkl0mnopqrstuv.apps.googleusercontent.com") // TODO: Replace with real one from your Firebase google-services.json or console
+            .requestEmail()
+            .build()
+    }
+    val googleSignInClient = remember { GoogleSignIn.getClient(context, gso) }
+
+    // Launcher for Google Sign In intent
+    val signInLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val idToken = account.idToken
+            if (idToken != null) {
+                authViewModel.signInWithGoogle(
+                    idToken = idToken,
+                    onSuccess = { authViewModel.refreshUser() },
+                    onError = { /* show snackbar in real app */ }
+                )
+            }
+        } catch (e: ApiException) {
+            // Handle error, e.g. user cancelled
+        }
+    }
 
     // Role based bottom navigation items - different appearance for admin
     val navItems = if (currentUser?.isAdmin == true) {
@@ -147,12 +184,9 @@ fun TaBritaApp(
     if (currentUser == null) {
         // Estetic modern login screen
         LoginScreen(
-            onGoogleSignIn = { idToken ->
-                authViewModel.signInWithGoogle(
-                    idToken = idToken,
-                    onSuccess = { authViewModel.refreshUser() },
-                    onError = { /* In production show snackbar */ }
-                )
+            onSignInClick = {
+                val signInIntent = googleSignInClient.signInIntent
+                signInLauncher.launch(signInIntent)
             }
         )
         return
