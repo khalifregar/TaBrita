@@ -19,9 +19,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -98,10 +95,6 @@ fun ExploreScreen(
                 EmptySearchResult(query = state.searchQuery)
             } else {
                 LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .wrapContentWidth(Alignment.CenterHorizontally)
-                        .widthIn(max = 720.dp),
                     contentPadding = PaddingValues(bottom = 100.dp)
                 ) {
                     items(state.filteredArticles, key = { it.id }) { article ->

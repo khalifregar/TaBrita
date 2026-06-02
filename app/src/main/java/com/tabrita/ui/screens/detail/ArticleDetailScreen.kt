@@ -40,8 +40,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -133,8 +131,6 @@ fun ArticleDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .widthIn(max = 720.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             // Hero Image

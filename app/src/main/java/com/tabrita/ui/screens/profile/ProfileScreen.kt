@@ -35,8 +35,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -73,8 +71,6 @@ fun ProfileScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .wrapContentWidth(Alignment.CenterHorizontally)
-                .widthIn(max = 720.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             // Profile header

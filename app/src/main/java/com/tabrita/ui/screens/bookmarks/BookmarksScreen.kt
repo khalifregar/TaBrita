@@ -18,8 +18,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -60,9 +58,7 @@ fun BookmarksScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding)
-                    .wrapContentWidth(Alignment.CenterHorizontally)
-                    .widthIn(max = 720.dp),
+                    .padding(padding),
                 contentPadding = PaddingValues(bottom = 24.dp)
             ) {
                 items(state.bookmarkedArticles, key = { it.id }) { article ->
