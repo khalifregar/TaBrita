@@ -7,8 +7,9 @@ import java.time.Instant
 
 /**
  * Curated high-quality mock data for TaBrita demo.
- * Includes real scraped articles (from detik/kompas/tempo enrich) with rich contentBlocks
- * so that clicking shows full data (text slices + images per slice) in ArticleDetailScreen.
+ * Includes real scraped articles (from detik/kompas/tempo enrich + gali-full-250 related expansion)
+ * with rich contentBlocks so that clicking shows full data (text slices + images per slice) in ArticleDetailScreen.
+ * More real Tempo rich examples added from deep related expansion (hiburan 162+, etc).
  */
 object MockData {
 
@@ -113,35 +114,86 @@ object MockData {
             )
         ),
         Article(
-            id = "f22446a7bf7116d7",
-            title = "Kisah Ibu-ibu di Ende Bangkit dari KDRT Berkat Program ATENSI Kemensos",
-            description = "Ibu-ibu di Ende, NTT bangkit dari kekerasan dalam rumah tangga berkat bantuan usaha dari Kementerian Sosial.",
-            thumbnailUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/ilustrasi-penenun-kain-dari-ende-1780404603861_43.jpeg?w=210&q=90",
-            source = "detik.com",
-            author = "Redaksi detik.com",
-            publishedAt = Instant.parse("2026-06-02T14:23:59.968119Z"),
-            category = Category.POLITIK,
-            readTimeMinutes = 5,
-            url = "https://news.detik.com/berita/d-8515122/kisah-ibu-ibu-di-ende-bangkit-dari-kdrt-berkat-program-atensi-kemensos",
+            id = "tempo-hiburan-jantung-213",
+            title = "Keluhan Penyakit Jantung yang Sering Dianggap Biasa",
+            description = "DOKTER Spesialis Jantung dan Pembuluh Darah Bethsaida Hospital Gading Serpong menjelaskan keluhan penyakit jantung yang sering dianggap biasa.",
+            thumbnailUrl = "https://statik.tempo.co/data/2025/02/04/id_1374609/1374609_720.jpg",
+            source = "tempo.co",
+            author = "Redaksi tempo.co",
+            publishedAt = Instant.parse("2026-06-02T14:24:00.031215Z"),
+            category = Category.KESEHATAN,
+            readTimeMinutes = 4,
+            url = "https://www.tempo.co/gaya-hidup/keluhan-penyakit-jantung-yang-sering-dianggap-biasa-2142479",
             contentBlocks = listOf(
-                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/api/wm/2026/06/02/ilustrasi-penenun-kain-dari-ende-1780404603861_169.jpeg?wid=54&w=1200&v=1&t=jpeg"),
-                ContentBlock(text = "Namun, hal paling menyakitkan bukanlah kemiskinan itu sendiri. Luka terdalam justru datang dari orang terdekat. Berkat program ATENSI Kemensos, para ibu mendapatkan bantuan usaha dan harapan baru.", imageUrl = null)
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/02/04/id_1374609/1374609_720.jpg"),
+                ContentBlock(text = "Ilustrasi penyakit jantung/serangan jantung. Shutterstock", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/02/04/id_1374609/1374609_720.jpg"),
+                ContentBlock(text = "DOKTER Spesialis Jantung dan Pembuluh Darah Bethsaida Hospital Gading Serpong Putu Parwata menjelaskan beberapa keluhan penyakit jantung yang sering dianggap biasa oleh masyarakat.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/02/04/id_1374719/1374719_720.jpg")
             )
         ),
         Article(
-            id = "bb18bfc805e3f1fd",
-            title = "Polisi Selidiki Motif Tetangga Siram Air ke Orang Mau Salat di Tangerang",
-            description = "Polsek Pasar Kemis mendalami kasus tetangga yang menyiramkan air ke warga yang hendak salat. Korban dan pelaku saling lapor.",
-            thumbnailUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/viral-tetangga-sering-siram-air-ke-orang-yang-lewat-mau-salat-di-tangerang-1780372548436_43.jpeg?w=210&q=90",
-            source = "detik.com",
-            author = "Redaksi detik.com",
-            publishedAt = Instant.parse("2026-06-02T14:23:59.968112Z"),
-            category = Category.POLITIK,
-            readTimeMinutes = 3,
-            url = "https://news.detik.com/berita/d-8515133/polisi-selidiki-motif-tetangga-siram-air-ke-orang-mau-salat-di-tangerang",
+            id = "tempo-digital-2138706",
+            title = "Setengah Anak Indonesia Terpapar Konten Seksual Media Sosial",
+            description = "KEMENTERIAN Komunikasi dan Digital mengungkap lebih dari separuh anak Indonesia telah terpapar konten bermuatan seksual di media sosial.",
+            thumbnailUrl = "https://statik.tempo.co/data/2025/12/02/id_1444913/1444913_720.jpg",
+            source = "tempo.co",
+            author = "Redaksi tempo.co",
+            publishedAt = Instant.parse("2026-06-02T14:24:00.029738Z"),
+            category = Category.TEKNOLOGI,
+            readTimeMinutes = 5,
+            url = "https://www.tempo.co/digital/setengah-anak-indonesia-terpapar-konten-seksual-media-sosial-2138706",
             contentBlocks = listOf(
-                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/api/wm/2026/06/02/viral-tetangga-sering-siram-air-ke-orang-yang-lewat-mau-salat-di-tangerang-1780372548436_169.jpeg?wid=54&w=1200&v=1&t=jpeg"),
-                ContentBlock(text = "Polsek Pasar Kemis, Polresta Tangerang, mengatakan sedang mendalami kasus tetangga yang menyiramkan air ke warga yang hendak salat. \"Saudara A mengaku menerima kekerasan hingga membuat laporan ke Polsek Pasar Kemis,\" ujar Humaedi.", imageUrl = null)
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/01/24/id_1372211/1372211_720.jpg"),
+                ContentBlock(text = "Ilustrasi anak bermain gadget/media sosial diawasi orang tua. Shutterstock", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/01/24/id_1372211/1372211_720.jpg"),
+                ContentBlock(text = "KEMENTERIAN Komunikasi dan Digital (Komdigi) mengungkap lebih dari separuh anak Indonesia telah terpapar konten bermuatan seksual di media sosial sehingga pelindungan anak di ruang digital menjadi semakin mendesak.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2024/02/23/id_1282132/1282132_720.jpg"),
+                ContentBlock(text = "Staf Khusus Menteri Komunikasi dan Digital Alfreno Kautsar menyatakan 50,3 persen anak terpapar konten bermuatan seksual melalui media sosial. Dari 80 juta, 48 persen mengalami kekerasan gender berbasis online.", imageUrl = null)
+            )
+        ),
+        // Real from Tempo gali full (related expansion boost, hiburan cat) - 12 blocks / 7 imgs example
+        Article(
+            id = "hiburan-sav-2151281",
+            title = "Savana Propok Taman Nasional Gunung Rinjani Terbakar",
+            description = "KAWASAN Savana Provok Balai Taman Nasional Gunung Rinjani (BTNGR) terbakar. Titik api mulai terlihat Selasa siang, 2 Juni 2026. Upaya pemadaman telah dilakukan.",
+            thumbnailUrl = "https://statik.tempo.co/data/2025/08/11/id_1419933/1419933_720.jpg",
+            source = "tempo.co",
+            author = "Redaksi tempo.co",
+            publishedAt = Instant.parse("2026-06-02T14:24:00.031264Z"),
+            category = Category.HIBURAN,
+            readTimeMinutes = 5,
+            url = "https://www.tempo.co/hiburan/savana-propok-taman-nasional-gunung-rinjani-terbakar-2151281",
+            contentBlocks = listOf(
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/08/11/id_1419933/1419933_720.jpg"),
+                ContentBlock(text = "Padang savana dari pos pendakian Sembalun menuju puncak Gunung Rinjani, Lombok, Nusa Tenggara Barat, 12 Mei 2012. Dok. Tempo/Aris Andrianto", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/08/11/id_1419933/1419933_720.jpg"),
+                ContentBlock(text = "KAWASAN Savana Provok Balai Taman Nasional Gunung Rinjani (BTNGR) terbakar. Titik api mulai terlihat Selasa siang, 2 Juni 2026. Upaya pemadaman telah dilakukan, namun hingga Selasa malam api belum bisa dikendalikan. Kepala Sub Bagian Tata Usaha BTNGR Astekita Ardi menyatakan berdasarkan pemantauan di lapangan, titik api pertama kali terlihat sekitar pukul 11.00 WITA, di kawasan Savana Provok 2.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2024/09/12/id_1336349/1336349_720.jpg"),
+                ContentBlock(text = "Kelompok Pengelola Savana Propok segera melakukan upaya pemadaman dengan mengerahkan 15 orang anggota yang bergerak menuju lokasi kejadian pada pukul 13.00 WITA. Pemadaman dilakukan secara intensif hingga pukul 18.00 WITA. Namun demikian, upaya pemadaman belum berhasil mengendalikan seluruh titik api karena keterbatasan personel, logistik, dan peralatan pemadaman yang tersedia di lapangan.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2020/06/06/id_943320/943320_720.jpg"),
+                ContentBlock(text = "Namun lantaran kondisi telah memasuki malam hari dengan tingkat pencahayaan yang sangat terbatas, serta mempertimbangkan faktor keselamatan personel yang bertugas, kegiatan pemadaman dihentikan sementara dan akan dilanjutkan kembali pada Rabu, 3 Juni 2026, pagi.", imageUrl = null)
+            )
+        ),
+        // Real from Tempo gali (politik, deep related) - rich 12 blocks example
+        Article(
+            id = "politik-bgn-2143277",
+            title = "Pimpinan BGN Dirombak, Istana Minta Nanik Segera Konsolidasi",
+            description = "ISTANA Kepresidenan meminta tiga petinggi baru Badan Gizi Nasional untuk segera melakukan konsolidasi dan memperkuat koordinasi lintas sektor.",
+            thumbnailUrl = "https://statik.tempo.co/data/2026/02/18/id_1459552/1459552_720.jpg",
+            source = "tempo.co",
+            author = "Redaksi tempo.co",
+            publishedAt = Instant.parse("2026-06-02T14:24:00.031264Z"),
+            category = Category.POLITIK,
+            readTimeMinutes = 4,
+            url = "https://www.tempo.co/politik/pimpinan-bgn-dirombak-istana-minta-nanik-segera-konsolidasi-2143277",
+            contentBlocks = listOf(
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2026/02/18/id_1459552/1459552_720.jpg"),
+                ContentBlock(text = "Mensesneg Prasetyo Hadi di Gedung DPR, Jakarta, 18 Februari 2026. Tempo/Dian Rahma", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2026/02/18/id_1459552/1459552_720.jpg"),
+                ContentBlock(text = "ISTANA Kepresidenan meminta tiga petinggi baru Badan Gizi Nasional untuk segera melakukan konsolidasi dan memperkuat koordinasi lintas sektor. Presiden Prabowo Subianto baru saja merombak susunan pimpinan BGN—lembaga yang mengurus proyek andalannya, makan bergizi gratis alias MBG, pada Selasa, 2 Juni 2026.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2026/02/02/id_1456559/1456559_720.jpg"),
+                ContentBlock(text = "Selain itu, pemerintah juga meminta ketiga pemimpin BGN untuk memperkuat koordinasi dengan pemerintah daerah, baik pemerintah provinsi maupun kabupaten/kota, hingga memastikan seluruh program Badan Gizi Nasional dapat tetap berjalan dengan sebaik-baiknya.", imageUrl = null)
             )
         )
     )
