@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.tabrita"
+    namespace = "tech.tabrita.com"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.tabrita"
+        applicationId = "tech.tabrita.com"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
