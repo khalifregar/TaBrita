@@ -16,7 +16,7 @@
     <string name="home_see_all">Lihat Semua</string>
 
     <!-- Explore -->
-    <string name="explore_title">Jelajahi Topik</string>
+    <string name="explore_title">Jelajah</string>
     <string name="search_placeholder">Cari berita, topik, atau sumber…</string>
 
     <!-- Bookmarks -->
@@ -70,6 +70,7 @@
     <string name="detail_back">Kembali</string>
     <string name="detail_share_article">Bagikan artikel</string>
     <string name="detail_share_body">%1$s\n\n%2$s\n\nBaca selengkapnya di TaBrita</string>
+    <string name="detail_share_fab_body">%1$s\n\nBaca di TaBrita</string>
 
     <!-- Upload (Admin) -->
     <string name="upload_title">Upload Berita Baru</string>
@@ -94,4 +95,29 @@
 
     <!-- Nav for Admin -->
     <string name="nav_upload">Upload</string>
+
+    <!-- Explore -->
+    <string name="explore_search_placeholder">Cari berita, topik, atau sumber…</string>
+    <string name="explore_empty">Tidak ada artikel</string>
+    <string name="explore_empty_desc">Coba kata kunci lain atau pilih kategori berbeda</string>
+
+    <!-- Profile -->
+    <string name="profile_reader_title">Pembaca Setia</string>
+    <string name="profile_email_placeholder">pembaca@tabrita.id</string>
+    <string name="profile_dark_theme">Tema Gelap</string>
+    <string name="profile_dark_theme_sub">Pengalaman membaca yang nyaman di malam hari</string>
+    <string name="profile_notifications_title">Notifikasi Berita</string>
+    <string name="profile_notifications_sub">Dapatkan pemberitahuan artikel terbaru</string>
+    <string name="profile_about_title">Tentang TaBrita</string>
+    <string name="profile_about_sub">Versi %1$s • Berita modern untuk Indonesia</string>
+    <string name="profile_logout_text">Keluar dari Akun</string>
+
+    <!-- Detail / meta -->
+    <string name="detail_bullet">•</string>
+    <string name="detail_read_time_inline">%1$d menit baca</string>
+
+    <!-- Common actions -->
+    <string name="action_share">Bagikan</string>
+    <string name="action_bookmark">Simpan</string>
+    <string name="action_bookmark_alt">Bookmark</string>
 </resources>

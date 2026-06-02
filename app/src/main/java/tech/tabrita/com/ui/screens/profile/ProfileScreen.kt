@@ -36,6 +36,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
@@ -52,16 +55,22 @@ private const val APP_VERSION = "1.0.0"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(windowSizeClass: androidx.compose.material3.windowsizeclass.WindowSizeClass? = null) {
     var isDarkMode by remember { mutableStateOf(true) }
     var notificationsEnabled by remember { mutableStateOf(true) }
+
+    val widthSizeClass = windowSizeClass?.widthSizeClass ?: WindowWidthSizeClass.Compact
+    val isExpanded = widthSizeClass == WindowWidthSizeClass.Expanded
+    val avatarSize = if (isExpanded) TaBritaDimens.avatarSize * 1.3f else TaBritaDimens.avatarSize
+    val contentMaxWidth = if (isExpanded) TaBritaDimens.maxContentWidth else TaBritaDimens.maxContentWidth * 0.95f
+    val horizontalPad = if (isExpanded) TaBritaDimens.paddingXXLarge else TaBritaDimens.paddingLarge
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Profil",
+                        text = stringResource(R.string.profile_title),
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                     )
                 },
@@ -75,18 +84,20 @@ fun ProfileScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .widthIn(max = contentMaxWidth)
                 .verticalScroll(rememberScrollState())
         ) {
             // Profile header
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(TaBritaDimens.paddingLarge),
+                    .padding(horizontal = horizontalPad, vertical = TaBritaDimens.paddingLarge),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(
                     modifier = Modifier
-                        .size(TaBritaDimens.avatarSize)
+                        .size(avatarSize)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.primary),
                     contentAlignment = Alignment.Center
@@ -95,18 +106,18 @@ fun ProfileScreen() {
                         imageVector = Icons.Default.Person,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier.size(48.dp)
+                        modifier = Modifier.size(if (isExpanded) 60.dp else 48.dp)
                     )
                 }
 
                 Spacer(modifier = Modifier.height(TaBritaDimens.paddingMedium))
 
                 Text(
-                    text = "Pembaca Setia",
+                    text = stringResource(R.string.profile_reader_title),
                     style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
                 )
                 Text(
-                    text = "pembaca@tabrita.id",
+                    text = stringResource(R.string.profile_email_placeholder),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -117,37 +128,39 @@ fun ProfileScreen() {
             // Settings Section
             SettingsItem(
                 icon = Icons.Default.DarkMode,
-                title = "Tema Gelap",
-                subtitle = "Pengalaman membaca yang nyaman di malam hari",
+                title = stringResource(R.string.profile_dark_theme),
+                subtitle = stringResource(R.string.profile_dark_theme_sub),
                 trailing = {
                     Switch(
                         checked = isDarkMode,
                         onCheckedChange = { isDarkMode = it }
                     )
-                }
+                },
+                horizontalPadding = horizontalPad
             )
 
             SettingsItem(
                 icon = Icons.Default.Notifications,
-                title = "Notifikasi Berita",
-                subtitle = "Dapatkan pemberitahuan artikel terbaru",
+                title = stringResource(R.string.profile_notifications_title),
+                subtitle = stringResource(R.string.profile_notifications_sub),
                 trailing = {
                     Switch(
                         checked = notificationsEnabled,
                         onCheckedChange = { notificationsEnabled = it }
                     )
-                }
+                },
+                horizontalPadding = horizontalPad
             )
 
             HorizontalDivider(
-                modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall),
+                modifier = Modifier.padding(horizontal = horizontalPad, vertical = TaBritaDimens.paddingXSmall),
                 color = MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
             )
 
             SettingsItem(
                 icon = Icons.Default.Info,
-                title = "Tentang TaBrita",
-                subtitle = "Versi $APP_VERSION • Berita modern untuk Indonesia",
+                title = stringResource(R.string.profile_about_title),
+                subtitle = stringResource(R.string.profile_about_sub, APP_VERSION),
                 trailing = {
                     Icon(
                         imageVector = Icons.Default.ChevronRight,
@@ -155,7 +168,8 @@ fun ProfileScreen() {
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },
-                onClick = { /* TODO: open about */ }
+                onClick = { /* TODO: open about */ },
+                horizontalPadding = horizontalPad
             )
 
             Spacer(modifier = Modifier.height(TaBritaDimens.paddingXXLarge))
@@ -164,7 +178,7 @@ fun ProfileScreen() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = TaBritaDimens.paddingLarge)
+                    .padding(horizontal = horizontalPad)
                     .clip(RoundedCornerShape(TaBritaDimens.cornerLarge))
                     .background(MaterialTheme.colorScheme.surface)
                     .clickable { /* mock */ }
@@ -172,7 +186,7 @@ fun ProfileScreen() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Keluar dari Akun",
+                    text = stringResource(R.string.profile_logout_text),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.error
                 )
@@ -189,13 +203,14 @@ private fun SettingsItem(
     title: String,
     subtitle: String,
     trailing: @Composable () -> Unit,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
+    horizontalPadding: androidx.compose.ui.unit.Dp = TaBritaDimens.paddingLarge
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(enabled = onClick != null, onClick = { onClick?.invoke() })
-            .padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingSmall),
+            .padding(horizontal = horizontalPadding, vertical = TaBritaDimens.paddingSmall),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

@@ -136,7 +136,7 @@ fun ArticleCard(
                 ) {
                     Icon(
                         imageVector = if (isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
-                        contentDescription = "Bookmark",
+                        contentDescription = stringResource(R.string.action_bookmark_alt),
                         tint = if (isBookmarked) MaterialTheme.colorScheme.primary else TaBritaColors.TextOnDarkPrimary,
                         modifier = Modifier.size(TaBritaDimens.iconSizeSmall)
                     )

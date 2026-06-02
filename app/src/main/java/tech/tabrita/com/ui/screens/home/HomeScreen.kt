@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +20,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
@@ -61,10 +68,19 @@ import tech.tabrita.com.ui.components.ShimmerArticleCard
 fun HomeScreen(
     onArticleClick: (String) -> Unit,
     onNavigateToExplore: () -> Unit,
+    windowSizeClass: androidx.compose.material3.windowsizeclass.WindowSizeClass? = null,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     val refreshState = rememberPullToRefreshState()
+
+    // Advanced responsive: decide columns based on window size class
+    val widthSizeClass = windowSizeClass?.widthSizeClass ?: WindowWidthSizeClass.Compact
+    val numColumns = when (widthSizeClass) {
+        WindowWidthSizeClass.Expanded -> 3
+        WindowWidthSizeClass.Medium -> 2
+        else -> 1
+    }
 
     Scaffold(
         topBar = {
@@ -72,7 +88,7 @@ fun HomeScreen(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "TaBrita",
+                            text = stringResource(R.string.app_name),
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold
                             ),
@@ -111,12 +127,16 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(numColumns),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .widthIn(max = TaBritaDimens.maxContentWidth),
                 contentPadding = PaddingValues(bottom = TaBritaDimens.paddingLarge)
             ) {
                 // Greeting
-                item {
+                item(span = { GridItemSpan(numColumns) }) {
                     Column(modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingXSmall)) {
                         Text(
                             text = stringResource(R.string.home_greeting_morning),
@@ -131,7 +151,7 @@ fun HomeScreen(
                 }
 
                 // Search bar shortcut
-                item {
+                item(span = { GridItemSpan(numColumns) }) {
                     Box(
                         modifier = Modifier
                             .padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingMedium)
@@ -151,7 +171,7 @@ fun HomeScreen(
 
                 // Featured / Hero section
                 if (state.featuredArticles.isNotEmpty()) {
-                    item {
+                    item(span = { GridItemSpan(numColumns) }) {
                         Text(
                             text = stringResource(R.string.home_editor_picks),
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
@@ -159,7 +179,7 @@ fun HomeScreen(
                         )
                     }
 
-                    item {
+                    item(span = { GridItemSpan(numColumns) }) {
                         val pagerState = rememberPagerState(pageCount = { state.featuredArticles.size })
 
                         androidx.compose.foundation.layout.BoxWithConstraints {
@@ -181,12 +201,12 @@ fun HomeScreen(
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(TaBritaDimens.paddingLarge))
                     }
                 }
 
                 // Categories
-                item {
+                item(span = { GridItemSpan(numColumns) }) {
                     Text(
                         text = stringResource(R.string.home_categories),
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
@@ -206,11 +226,11 @@ fun HomeScreen(
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(TaBritaDimens.paddingMedium))
                 }
 
                 // For You / Main Feed
-                item {
+                item(span = { GridItemSpan(numColumns) }) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -219,7 +239,7 @@ fun HomeScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = if (state.selectedCategory == Category.ALL) "Untuk Anda" else state.selectedCategory.displayName,
+                            text = if (state.selectedCategory == Category.ALL) stringResource(R.string.home_for_you) else state.selectedCategory.displayName,
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold)
                         )
                     }

@@ -3,6 +3,8 @@ package tech.tabrita.com.ui.screens.explore
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -23,6 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.ui.res.stringResource
 import tech.tabrita.com.ui.theme.TaBritaDimens
 import tech.tabrita.com.R
@@ -36,16 +43,24 @@ import tech.tabrita.com.ui.components.TaBritaSearchBar
 @Composable
 fun ExploreScreen(
     onArticleClick: (String) -> Unit,
+    windowSizeClass: androidx.compose.material3.windowsizeclass.WindowSizeClass? = null,
     viewModel: ExploreViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+
+    val widthSizeClass = windowSizeClass?.widthSizeClass ?: WindowWidthSizeClass.Compact
+    val numColumns = when (widthSizeClass) {
+        WindowWidthSizeClass.Expanded -> 3
+        WindowWidthSizeClass.Medium -> 2
+        else -> 1
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Jelajah",
+                        text = stringResource(R.string.explore_title),
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                     )
                 },
@@ -64,7 +79,7 @@ fun ExploreScreen(
             TaBritaSearchBar(
                 query = state.searchQuery,
                 onQueryChange = viewModel::onSearchQueryChange,
-                placeholder = "Cari berita, topik, atau sumber…",
+                placeholder = stringResource(R.string.explore_search_placeholder),
                 modifier = Modifier.padding(horizontal = TaBritaDimens.paddingLarge, vertical = TaBritaDimens.paddingMedium)
             )
 
@@ -97,7 +112,12 @@ fun ExploreScreen(
             } else if (state.filteredArticles.isEmpty()) {
                 EmptySearchResult(query = state.searchQuery)
             } else {
-                LazyColumn(
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(numColumns),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentWidth(androidx.compose.ui.Alignment.CenterHorizontally)
+                        .widthIn(max = TaBritaDimens.maxContentWidth),
                     contentPadding = PaddingValues(bottom = TaBritaDimens.paddingContentBottom)
                 ) {
                     items(state.filteredArticles, key = { it.id }) { article ->
@@ -131,13 +151,13 @@ private fun EmptySearchResult(query: String) {
         Spacer(modifier = Modifier.height(TaBritaDimens.paddingMedium))
         Text(
             text = if (query.isNotBlank())
-                "Tidak ada hasil untuk \"$query\""
-            else "Tidak ada artikel",
+                stringResource(R.string.empty_search, query)
+            else stringResource(R.string.explore_empty),
             style = MaterialTheme.typography.titleMedium
         )
         Spacer(modifier = Modifier.height(TaBritaDimens.paddingXSmall))
         Text(
-            text = "Coba kata kunci lain atau pilih kategori berbeda",
+            text = stringResource(R.string.explore_empty_desc),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
