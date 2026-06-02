@@ -106,7 +106,7 @@ fun ProfileScreen(windowSizeClass: androidx.compose.material3.windowsizeclass.Wi
                         imageVector = Icons.Default.Person,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier.size(if (isExpanded) 60.dp else 48.dp)
+                        modifier = Modifier.size(if (isExpanded) TaBritaDimens.avatarIconSizeLarge else TaBritaDimens.avatarIconSize)
                     )
                 }
 

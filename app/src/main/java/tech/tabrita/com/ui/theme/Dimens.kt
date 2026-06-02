@@ -78,4 +78,9 @@ object TaBritaDimens {
 
     // Detail 2-pane sidebar
     val detailSidebarWidth = 300.dp
+    val relatedGridMaxHeight = 400.dp
+
+    // Profile avatar internal icon
+    val avatarIconSize = 48.dp
+    val avatarIconSizeLarge = 60.dp
 }

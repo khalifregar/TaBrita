@@ -223,7 +223,7 @@ fun ArticleDetailScreen(
                             horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.relatedCardSpacing),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .heightIn(max = 400.dp)
+                                .heightIn(max = TaBritaDimens.relatedGridMaxHeight)
                                 .padding(bottom = TaBritaDimens.paddingXXLarge)
                         ) {
                             items(state.relatedArticles) { related ->
