@@ -140,7 +140,7 @@ fun ArticleDetailScreen(
                     .height(260.dp)
             ) {
                 AsyncImage(
-                    model = article.imageUrl,
+                    model = article.thumbnailUrl,
                     contentDescription = article.title,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -214,18 +214,33 @@ fun ArticleDetailScreen(
                 }
             }
 
-            // Article body - beautiful readable typography
+            // Article body - beautiful readable typography with slices/images (modern news style)
             Column(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .padding(bottom = 24.dp)
             ) {
-                Text(
-                    text = article.content,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.15f
-                )
+                article.contentBlocks.forEach { block ->
+                    Text(
+                        text = block.text,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.15f
+                    )
+                    block.imageUrl?.let { imgUrl ->
+                        Spacer(modifier = Modifier.height(16.dp))
+                        AsyncImage(
+                            model = imgUrl,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(220.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                }
             }
 
             // Related articles section
@@ -315,7 +330,7 @@ private fun RelatedArticleCard(
             .clickable(onClick = onClick)
     ) {
         AsyncImage(
-            model = article.imageUrl,
+            model = article.thumbnailUrl,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier

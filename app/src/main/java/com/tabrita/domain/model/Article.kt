@@ -9,14 +9,14 @@ data class Article(
     val id: String,
     val title: String,
     val description: String,
-    val content: String,
-    val imageUrl: String,
+    val thumbnailUrl: String,
     val source: String,
     val author: String,
     val publishedAt: Instant,
     val category: Category,
     val readTimeMinutes: Int,
-    val url: String = ""
+    val url: String = "",
+    val contentBlocks: List<ContentBlock> = emptyList()
 ) {
     val timeAgo: String
         get() = formatTimeAgo(publishedAt)
@@ -37,6 +37,11 @@ data class Article(
         }
     }
 }
+
+data class ContentBlock(
+    val text: String,
+    val imageUrl: String? = null
+)
 
 enum class Category(val displayName: String, val emoji: String) {
     ALL("Semua", "📰"),

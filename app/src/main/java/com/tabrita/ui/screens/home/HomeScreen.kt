@@ -258,7 +258,7 @@ private fun FeaturedHeroCard(
             .clickable(onClick = onClick)
     ) {
         AsyncImage(
-            model = article.imageUrl,
+            model = article.thumbnailUrl,
             contentDescription = article.title,
             contentScale = ContentScale.Crop,
             modifier = Modifier.matchParentSize()

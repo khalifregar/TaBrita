@@ -5,6 +5,7 @@ sealed class Screen(val route: String) {
     data object Explore : Screen("explore")
     data object Bookmarks : Screen("bookmarks")
     data object Profile : Screen("profile")
+    data object Upload : Screen("upload") // Admin only
     data object ArticleDetail : Screen("article/{articleId}") {
         fun createRoute(articleId: String) = "article/$articleId"
     }

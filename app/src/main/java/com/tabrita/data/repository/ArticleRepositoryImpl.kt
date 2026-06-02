@@ -46,7 +46,7 @@ class ArticleRepositoryImpl @Inject constructor(
         return allArticles.filter { article ->
             article.title.lowercase().contains(lowerQuery) ||
                 article.description.lowercase().contains(lowerQuery) ||
-                article.content.lowercase().contains(lowerQuery) ||
+                article.contentBlocks.any { it.text.lowercase().contains(lowerQuery) } ||
                 article.source.lowercase().contains(lowerQuery) ||
                 article.author.lowercase().contains(lowerQuery)
         }

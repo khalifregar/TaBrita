@@ -11,11 +11,14 @@ import com.tabrita.ui.screens.detail.ArticleDetailScreen
 import com.tabrita.ui.screens.explore.ExploreScreen
 import com.tabrita.ui.screens.home.HomeScreen
 import com.tabrita.ui.screens.profile.ProfileScreen
+import com.tabrita.ui.screens.upload.UploadNewsScreen
+import com.tabrita.data.auth.AppUser
 
 @Composable
 fun AppNavigation(
     navController: NavHostController = rememberNavController(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    currentUser: AppUser? = null
 ) {
     NavHost(
         navController = navController,
@@ -54,6 +57,26 @@ fun AppNavigation(
 
         composable(Screen.Profile.route) {
             ProfileScreen()
+        }
+
+        composable(Screen.Upload.route) {
+            if (currentUser?.isAdmin == true) {
+                UploadNewsScreen(
+                    currentUser = currentUser,
+                    onUploadSuccess = {
+                        // Go back to home after successful upload
+                        navController.popBackStack(Screen.Home.route, false)
+                    }
+                )
+            } else {
+                // Fallback
+                HomeScreen(
+                    onArticleClick = { articleId ->
+                        navController.navigate(Screen.ArticleDetail.createRoute(articleId))
+                    },
+                    onNavigateToExplore = { /* no-op */ }
+                )
+            }
         }
 
         composable(
