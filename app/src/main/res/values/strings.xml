@@ -120,4 +120,10 @@
     <string name="action_share">Bagikan</string>
     <string name="action_bookmark">Simpan</string>
     <string name="action_bookmark_alt">Bookmark</string>
+
+    <!-- Fallback/placeholder for Google Sign-In web client ID.
+         The google-services plugin will override this with the real value from google-services.json
+         (if you have configured a Web client ID under Firebase Auth > Sign-in method > Google).
+         Keep this as a safe placeholder so the app always compiles. -->
+    <string name="default_web_client_id" translatable="false">786698668763-abc123def456ghi789jkl0mnopqrstuv.apps.googleusercontent.com</string>
 </resources>

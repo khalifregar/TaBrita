@@ -65,4 +65,14 @@ object TaBritaDimens {
     // Other
     val avatarSize = 88.dp
     val smallAvatarSize = 36.dp
+
+    // Search & bars
+    val searchBarHeight = 52.dp
+
+    // Shimmer placeholders (for loading states)
+    val shimmerTitleHeight = 20.dp
+    val shimmerDescHeight = 14.dp
+    val shimmerMetaHeight = 12.dp
+    val shimmerMetaWidthShort = 60.dp
+    val shimmerMetaWidthMedium = 80.dp
 }

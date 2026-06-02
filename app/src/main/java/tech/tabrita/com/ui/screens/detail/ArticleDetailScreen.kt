@@ -256,39 +256,42 @@ fun ArticleDetailScreen(
         val fabShareText = stringResource(R.string.action_share)
         val fabShareBody = stringResource(R.string.detail_share_fab_body, article.title)
 
-        // Floating action share + bookmark (modern touch)
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(TaBritaDimens.paddingLarge),
-            contentAlignment = Alignment.BottomEnd
-        ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.fabSpacing)) {
-                FloatingActionButton(
-                    onClick = { viewModel.toggleBookmark() },
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    contentColor = if (state.isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                    elevation = FloatingActionButtonDefaults.elevation(TaBritaDimens.elevationMedium)
-                ) {
-                    Icon(
-                        imageVector = if (state.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
-                        contentDescription = stringResource(R.string.action_bookmark)
-                    )
-                }
+        // Floating action share + bookmark (modern touch) - only on compact for thumb-friendly + to avoid overlap with 2-pane sidebar.
+        // On Expanded/Medium the TopAppBar actions already provide bookmark + share.
+        if (!isExpanded) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(TaBritaDimens.paddingLarge),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                Row(horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.fabSpacing)) {
+                    FloatingActionButton(
+                        onClick = { viewModel.toggleBookmark() },
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        contentColor = if (state.isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                        elevation = FloatingActionButtonDefaults.elevation(TaBritaDimens.elevationMedium)
+                    ) {
+                        Icon(
+                            imageVector = if (state.isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
+                            contentDescription = stringResource(R.string.action_bookmark)
+                        )
+                    }
 
-                FloatingActionButton(
-                    onClick = {
-                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                            type = "text/plain"
-                            putExtra(Intent.EXTRA_SUBJECT, article.title)
-                            putExtra(Intent.EXTRA_TEXT, fabShareBody)
-                        }
-                        context.startActivity(Intent.createChooser(shareIntent, fabShareText))
-                    },
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                ) {
-                    Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.action_share))
+                    FloatingActionButton(
+                        onClick = {
+                            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                type = "text/plain"
+                                putExtra(Intent.EXTRA_SUBJECT, article.title)
+                                putExtra(Intent.EXTRA_TEXT, fabShareBody)
+                            }
+                            context.startActivity(Intent.createChooser(shareIntent, fabShareText))
+                        },
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ) {
+                        Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.action_share))
+                    }
                 }
             }
         }

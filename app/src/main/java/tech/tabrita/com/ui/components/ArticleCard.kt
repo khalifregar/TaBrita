@@ -156,7 +156,7 @@ fun ArticleCard(
                     )
                     Spacer(modifier = Modifier.width(TaBritaDimens.smallGap))
                     Text(
-                        text = "•",
+                        text = stringResource(R.string.detail_bullet),
                         color = TaBritaColors.TextOnDarkTertiary
                     )
                     Spacer(modifier = Modifier.width(TaBritaDimens.smallGap))
@@ -208,7 +208,7 @@ fun ArticleCard(
                     )
 
                     Text(
-                        text = "•",
+                        text = stringResource(R.string.detail_bullet),
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                     )
 

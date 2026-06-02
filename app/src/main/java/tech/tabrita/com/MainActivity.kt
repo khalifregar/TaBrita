@@ -147,12 +147,14 @@ fun TaBritaApp(
 
     val context = LocalContext.current
 
-    // Create GoogleSignInClient 
-    // IMPORTANT: After adding real google-services.json (with OAuth web client), it generates R.string.default_web_client_id
-    // For now using placeholder - replace with real Web client ID from Firebase console (Authentication > Sign-in method > Google > Web SDK)
+    // Create GoogleSignInClient using the web client ID.
+    // We define a placeholder in strings.xml so it always compiles.
+    // The google-services plugin (from your real google-services.json) will provide/override the correct value
+    // when a Web client ID is configured in Firebase Console (Auth > Sign-in method > Google).
+    val webClientId = context.getString(R.string.default_web_client_id)
     val gso = remember {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("786698668763-abc123def456ghi789jkl0mnopqrstuv.apps.googleusercontent.com") // TODO: Replace with real one from your Firebase google-services.json or console
+            .requestIdToken(webClientId)
             .requestEmail()
             .build()
     }
