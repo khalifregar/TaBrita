@@ -30,7 +30,7 @@ import tech.tabrita.com.ui.theme.TaBritaDimens
 fun TaBritaSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    placeholder: String = "Cari berita...",
+    placeholder: String = "",
     modifier: Modifier = Modifier
 ) {
     val focusManager = LocalFocusManager.current
@@ -38,7 +38,7 @@ fun TaBritaSearchBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(52.dp)
+            .height(TaBritaDimens.searchBarHeight)
             .clip(RoundedCornerShape(TaBritaDimens.cornerLarge))
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
@@ -52,7 +52,7 @@ fun TaBritaSearchBar(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(TaBritaDimens.smallIcon)
             )
 
             BasicTextField(

@@ -74,7 +74,7 @@ fun ShimmerArticleCard(modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
-                        .height(20.dp)
+                        .height(TaBritaDimens.shimmerTitleHeight)
                         .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
@@ -82,7 +82,7 @@ fun ShimmerArticleCard(modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.65f)
-                        .height(20.dp)
+                        .height(TaBritaDimens.shimmerTitleHeight)
                         .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
@@ -93,7 +93,7 @@ fun ShimmerArticleCard(modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(14.dp)
+                        .height(TaBritaDimens.shimmerDescHeight)
                         .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
@@ -101,7 +101,7 @@ fun ShimmerArticleCard(modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth(0.7f)
-                        .height(14.dp)
+                        .height(TaBritaDimens.shimmerDescHeight)
                         .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                         .background(brush)
                 )
@@ -111,16 +111,16 @@ fun ShimmerArticleCard(modifier: Modifier = Modifier) {
                 Row {
                     Box(
                         modifier = Modifier
-                            .width(80.dp)
-                            .height(12.dp)
+                            .width(TaBritaDimens.shimmerMetaWidthMedium)
+                            .height(TaBritaDimens.shimmerMetaHeight)
                             .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                             .background(brush)
                     )
                     Spacer(modifier = Modifier.width(TaBritaDimens.paddingXSmall))
                     Box(
                         modifier = Modifier
-                            .width(60.dp)
-                            .height(12.dp)
+                            .width(TaBritaDimens.shimmerMetaWidthShort)
+                            .height(TaBritaDimens.shimmerMetaHeight)
                             .clip(RoundedCornerShape(TaBritaDimens.paddingTiny))
                             .background(brush)
                     )

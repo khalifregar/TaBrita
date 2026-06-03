@@ -28,14 +28,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.res.stringResource
 import tech.tabrita.com.ui.theme.TaBritaDimens
 import tech.tabrita.com.R
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import coil3.compose.AsyncImage
 import tech.tabrita.com.data.auth.AppUser
+import tech.tabrita.com.domain.model.Category
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UploadNewsScreen(
     currentUser: AppUser,
     onUploadSuccess: () -> Unit = {},
+    windowSizeClass: androidx.compose.material3.windowsizeclass.WindowSizeClass? = null,
     viewModel: UploadViewModel = hiltViewModel()
 ) {
     val title by viewModel.title.collectAsState()
@@ -46,7 +54,11 @@ fun UploadNewsScreen(
     val isUploading by viewModel.isUploading.collectAsState()
     val error by viewModel.error.collectAsState()
 
-    val categories = listOf("Politik", "Teknologi", "Bisnis", "Olahraga", "Hiburan", "Kesehatan", "Sains")
+    val widthSizeClass = windowSizeClass?.widthSizeClass ?: WindowWidthSizeClass.Compact
+    val isLarge = widthSizeClass == WindowWidthSizeClass.Expanded || widthSizeClass == WindowWidthSizeClass.Medium
+    val useTwoColumnForm = isLarge
+
+    val categories = Category.entries.filter { it != Category.ALL }.map { it.displayName }
 
     val thumbnailPicker = rememberLauncherForActivityResult(
         ActivityResultContracts.GetContent()
@@ -68,20 +80,93 @@ fun UploadNewsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .wrapContentWidth(androidx.compose.ui.Alignment.CenterHorizontally)
+                .widthIn(max = TaBritaDimens.maxContentWidth)
                 .padding(horizontal = TaBritaDimens.paddingLarge),
             verticalArrangement = Arrangement.spacedBy(TaBritaDimens.paddingMedium)
         ) {
             item {
                 Spacer(Modifier.height(TaBritaDimens.paddingXSmall))
-                Text(stringResource(R.string.upload_news_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
-                OutlinedTextField(
-                    value = title,
-                    onValueChange = viewModel::updateTitle,
-                    placeholder = { Text(stringResource(R.string.upload_news_title_placeholder)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
-                )
+                if (useTwoColumnForm) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(TaBritaDimens.paddingMedium)) {
+                        Column(Modifier.weight(1f)) {
+                            Text(stringResource(R.string.upload_news_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                            OutlinedTextField(
+                                value = title,
+                                onValueChange = viewModel::updateTitle,
+                                placeholder = { Text(stringResource(R.string.upload_news_title_placeholder)) },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
+                            )
+                        }
+                        Column(Modifier.weight(1f)) {
+                            Text(stringResource(R.string.upload_category), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                            var expanded by remember { mutableStateOf(false) }
+                            ExposedDropdownMenuBox(
+                                expanded = expanded,
+                                onExpandedChange = { expanded = !expanded }
+                            ) {
+                                OutlinedTextField(
+                                    value = category,
+                                    onValueChange = {},
+                                    readOnly = true,
+                                    modifier = Modifier.fillMaxWidth().menuAnchor(),
+                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                                    shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
+                                )
+                                ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                                    categories.forEach { cat ->
+                                        DropdownMenuItem(
+                                            text = { Text(cat) },
+                                            onClick = {
+                                                viewModel.updateCategory(cat)
+                                                expanded = false
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    Text(stringResource(R.string.upload_news_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                    OutlinedTextField(
+                        value = title,
+                        onValueChange = viewModel::updateTitle,
+                        placeholder = { Text(stringResource(R.string.upload_news_title_placeholder)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
+                    )
+                    Spacer(Modifier.height(TaBritaDimens.paddingSmall))
+                    Text(stringResource(R.string.upload_category), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+                    var expanded by remember { mutableStateOf(false) }
+                    ExposedDropdownMenuBox(
+                        expanded = expanded,
+                        onExpandedChange = { expanded = !expanded }
+                    ) {
+                        OutlinedTextField(
+                            value = category,
+                            onValueChange = {},
+                            readOnly = true,
+                            modifier = Modifier.fillMaxWidth().menuAnchor(),
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                            shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
+                        )
+                        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                            categories.forEach { cat ->
+                                DropdownMenuItem(
+                                    text = { Text(cat) },
+                                    onClick = {
+                                        viewModel.updateCategory(cat)
+                                        expanded = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
 
             item {
@@ -90,38 +175,9 @@ fun UploadNewsScreen(
                     value = description,
                     onValueChange = viewModel::updateDescription,
                     placeholder = { Text(stringResource(R.string.upload_description_placeholder)) },
-                    modifier = Modifier.fillMaxWidth().heightIn(min = TaBritaDimens.paddingXXLarge * 3),
+                    modifier = Modifier.fillMaxWidth().heightIn(min = TaBritaDimens.formFieldHeight),
                     shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
                 )
-            }
-
-            item {
-                Text(stringResource(R.string.upload_category), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
-                var expanded by remember { mutableStateOf(false) }
-                ExposedDropdownMenuBox(
-                    expanded = expanded,
-                    onExpandedChange = { expanded = !expanded }
-                ) {
-                    OutlinedTextField(
-                        value = category,
-                        onValueChange = {},
-                        readOnly = true,
-                        modifier = Modifier.fillMaxWidth().menuAnchor(),
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                        shape = RoundedCornerShape(TaBritaDimens.cornerMedium)
-                    )
-                    ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                        categories.forEach { cat ->
-                            DropdownMenuItem(
-                                text = { Text(cat) },
-                                onClick = {
-                                    viewModel.updateCategory(cat)
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-                }
             }
 
             item {
@@ -139,7 +195,7 @@ fun UploadNewsScreen(
                     if (thumbnailUri != null) {
                         AsyncImage(
                             model = thumbnailUri,
-                            contentDescription = "Thumbnail",
+                            contentDescription = stringResource(R.string.upload_thumbnail),
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )

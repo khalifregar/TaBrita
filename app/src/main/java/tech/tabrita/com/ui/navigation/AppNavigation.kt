@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import tech.tabrita.com.ui.screens.bookmarks.BookmarksScreen
 import tech.tabrita.com.ui.screens.detail.ArticleDetailScreen
 import tech.tabrita.com.ui.screens.explore.ExploreScreen
@@ -18,7 +19,8 @@ import tech.tabrita.com.data.auth.AppUser
 fun AppNavigation(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier,
-    currentUser: AppUser? = null
+    currentUser: AppUser? = null,
+    windowSizeClass: WindowSizeClass? = null
 ) {
     NavHost(
         navController = navController,
@@ -35,7 +37,8 @@ fun AppNavigation(
                         popUpTo(Screen.Home.route)
                         launchSingleTop = true
                     }
-                }
+                },
+                windowSizeClass = windowSizeClass
             )
         }
 
@@ -43,7 +46,8 @@ fun AppNavigation(
             ExploreScreen(
                 onArticleClick = { articleId ->
                     navController.navigate(Screen.ArticleDetail.createRoute(articleId))
-                }
+                },
+                windowSizeClass = windowSizeClass
             )
         }
 
@@ -51,12 +55,13 @@ fun AppNavigation(
             BookmarksScreen(
                 onArticleClick = { articleId ->
                     navController.navigate(Screen.ArticleDetail.createRoute(articleId))
-                }
+                },
+                windowSizeClass = windowSizeClass
             )
         }
 
         composable(Screen.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(windowSizeClass = windowSizeClass)
         }
 
         composable(Screen.Upload.route) {
@@ -66,7 +71,8 @@ fun AppNavigation(
                     onUploadSuccess = {
                         // Go back to home after successful upload
                         navController.popBackStack(Screen.Home.route, false)
-                    }
+                    },
+                    windowSizeClass = windowSizeClass
                 )
             } else {
                 // Fallback
@@ -74,7 +80,8 @@ fun AppNavigation(
                     onArticleClick = { articleId ->
                         navController.navigate(Screen.ArticleDetail.createRoute(articleId))
                     },
-                    onNavigateToExplore = { /* no-op */ }
+                    onNavigateToExplore = { /* no-op */ },
+                    windowSizeClass = windowSizeClass
                 )
             }
         }
@@ -96,7 +103,8 @@ fun AppNavigation(
                         // Avoid deep stack
                         popUpTo(Screen.ArticleDetail.route) { inclusive = true }
                     }
-                }
+                },
+                windowSizeClass = windowSizeClass
             )
         }
     }

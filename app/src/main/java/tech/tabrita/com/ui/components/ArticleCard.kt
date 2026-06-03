@@ -136,7 +136,7 @@ fun ArticleCard(
                 ) {
                     Icon(
                         imageVector = if (isBookmarked) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
-                        contentDescription = "Bookmark",
+                        contentDescription = stringResource(R.string.action_bookmark_alt),
                         tint = if (isBookmarked) MaterialTheme.colorScheme.primary else TaBritaColors.TextOnDarkPrimary,
                         modifier = Modifier.size(TaBritaDimens.iconSizeSmall)
                     )
@@ -156,7 +156,7 @@ fun ArticleCard(
                     )
                     Spacer(modifier = Modifier.width(TaBritaDimens.smallGap))
                     Text(
-                        text = "•",
+                        text = stringResource(R.string.detail_bullet),
                         color = TaBritaColors.TextOnDarkTertiary
                     )
                     Spacer(modifier = Modifier.width(TaBritaDimens.smallGap))
@@ -208,7 +208,7 @@ fun ArticleCard(
                     )
 
                     Text(
-                        text = "•",
+                        text = stringResource(R.string.detail_bullet),
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                     )
 

@@ -32,7 +32,7 @@ fun CategoryChip(
 
     val textColor = TaBritaColors.TextOnDarkPrimary
 
-    val shape = RoundedCornerShape(50)
+    val shape = RoundedCornerShape(TaBritaDimens.cornerPill)
 
     val content = @Composable {
         Text(
