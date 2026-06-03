@@ -2,48 +2,78 @@ package tech.tabrita.com.data.repository
 
 import tech.tabrita.com.data.local.BookmarkDao
 import tech.tabrita.com.data.local.BookmarkEntity
+import tech.tabrita.com.data.remote.ArticleMapper
+import tech.tabrita.com.data.remote.TaBritaApiService
 import tech.tabrita.com.domain.model.Article
 import tech.tabrita.com.domain.model.Category
 import tech.tabrita.com.domain.repository.ArticleRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * ArticleRepository that prefers real data fetched from the local Python scraper API
+ * (news-scraper/scripts/api_server.py + tabrita_seed.json with full rich contentBlocks).
+ *
+ * Falls back to MockData (curated rich examples) if the API is not running or fails.
+ * This way Kotlin can "nangkap" (catch) the real scraped data dynamically.
+ */
 @Singleton
 class ArticleRepositoryImpl @Inject constructor(
-    private val bookmarkDao: BookmarkDao
+    private val bookmarkDao: BookmarkDao,
+    private val apiService: TaBritaApiService
 ) : ArticleRepository {
 
-    private val allArticles = MockData.articles
+    // In-memory cache for the session (loaded from remote on first use)
+    private var remoteArticles: List<Article>? = null
+
+    private suspend fun getRemoteOrFallback(): List<Article> {
+        if (remoteArticles != null) return remoteArticles!!
+
+        return try {
+            // Fetch a good chunk from the local API (scraper must be running)
+            val response = apiService.getArticles(limit = 200, page = 1)
+            val mapped = response.articles.map { ArticleMapper.toDomain(it) }
+            remoteArticles = mapped
+            mapped
+        } catch (e: Exception) {
+            // API not running / network error -> use the rich MockData as fallback
+            // (still has real enriched examples from previous scraper runs)
+            MockData.articles.also { remoteArticles = it }
+        }
+    }
 
     override suspend fun getAllArticles(): List<Article> {
-        delay(280) // Simulate network latency for realism
-        return allArticles
+        return getRemoteOrFallback()
     }
 
     override suspend fun getArticleById(id: String): Article? {
-        delay(120)
-        return allArticles.find { it.id == id }
+        val list = getRemoteOrFallback()
+        // Try remote get by id for precision if possible
+        return try {
+            val dto = apiService.getArticleById(id)
+            ArticleMapper.toDomain(dto)
+        } catch (e: Exception) {
+            list.find { it.id == id }
+        }
     }
 
     override suspend fun getArticlesByCategory(category: Category): List<Article> {
-        delay(220)
+        val list = getRemoteOrFallback()
         return if (category == Category.ALL) {
-            allArticles
+            list
         } else {
-            allArticles.filter { it.category == category }
+            list.filter { it.category == category }
         }
     }
 
     override suspend fun searchArticles(query: String): List<Article> {
-        delay(180)
-        if (query.isBlank()) return allArticles
+        val list = getRemoteOrFallback()
+        if (query.isBlank()) return list
 
         val lowerQuery = query.lowercase()
-        return allArticles.filter { article ->
+        return list.filter { article ->
             article.title.lowercase().contains(lowerQuery) ||
                 article.description.lowercase().contains(lowerQuery) ||
                 article.contentBlocks.any { it.text.lowercase().contains(lowerQuery) } ||
@@ -53,15 +83,14 @@ class ArticleRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTrendingArticles(limit: Int): List<Article> {
-        delay(160)
-        // Simulate trending by taking recent + high engagement mock (just shuffle + take)
-        return allArticles.shuffled().take(limit)
+        val list = getRemoteOrFallback()
+        // Simple "trending" = shuffle for demo (in real could sort by published or score)
+        return list.shuffled().take(limit)
     }
 
     override suspend fun getFeaturedArticles(): List<Article> {
-        delay(140)
-        // Pick 3 high quality featured (first 3 from different categories for variety)
-        return allArticles.filter { it.category != Category.ALL }
+        val list = getRemoteOrFallback()
+        return list.filter { it.category != Category.ALL }
             .distinctBy { it.category }
             .take(3)
     }
@@ -69,7 +98,10 @@ class ArticleRepositoryImpl @Inject constructor(
     override fun getBookmarkedArticles(): Flow<List<Article>> {
         return bookmarkDao.getAllBookmarks().map { bookmarks ->
             val bookmarkedIds = bookmarks.map { it.articleId }.toSet()
-            allArticles.filter { it.id in bookmarkedIds }
+            // Use the already-loaded (or fallback) list for mapping bookmarks.
+            // The list is populated on first get* call.
+            val listToUse = remoteArticles ?: MockData.articles
+            listToUse.filter { it.id in bookmarkedIds }
                 .sortedByDescending { article ->
                     bookmarks.find { it.articleId == article.id }?.bookmarkedAt ?: 0L
                 }

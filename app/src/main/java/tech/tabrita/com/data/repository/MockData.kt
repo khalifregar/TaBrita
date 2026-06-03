@@ -6,10 +6,11 @@ import tech.tabrita.com.domain.model.ContentBlock
 import java.time.Instant
 
 /**
- * Curated high-quality mock data for TaBrita demo.
- * Includes real scraped articles (from detik/kompas/tempo enrich + gali-full-250 related expansion)
- * with rich contentBlocks so that clicking shows full data (text slices + images per slice) in ArticleDetailScreen.
- * More real Tempo rich examples added from deep related expansion (hiburan 162+, etc).
+ * Curated high-quality mock data for TaBrita demo (used as fallback).
+ * Real data is fetched from the local Python API (news-scraper/scripts/api_server.py + tabrita_seed.json)
+ * so the app can dynamically get the full rich scraped articles (thousands with contentBlocks).
+ *
+ * Includes real enriched examples from detik/kompas/tempo so "bisa di klik dan wah".
  */
 object MockData {
 

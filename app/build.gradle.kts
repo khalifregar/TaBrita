@@ -104,6 +104,11 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.play.services.auth)
 
+    // Networking: Retrofit + Gson to fetch from local Python scraper API (so Kotlin can get real rich data)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson.converter)
+    implementation(libs.gson)
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
