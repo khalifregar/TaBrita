@@ -10,8 +10,8 @@ import retrofit2.http.Query
  *   cd news-scraper
  *   python -m uvicorn scripts.api_server:app --host 0.0.0.0 --port 8000
  *
- * From Android emulator use base URL: http://10.0.2.2:8000/
- * (physical device: adb reverse tcp:8000 tcp:8000 then http://127.0.0.1:8000/)
+ * For physical phone on same WiFi use PC LAN IP, e.g. http://192.168.100.43:8000/
+ * (or adb reverse if using localhost)
  */
 interface TaBritaApiService {
 

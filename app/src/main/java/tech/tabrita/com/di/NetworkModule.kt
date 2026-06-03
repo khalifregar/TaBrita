@@ -24,7 +24,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "http://10.0.2.2:8000/"
+    // For physical phone on same WiFi, use your PC's LAN IP (e.g. from ipconfig)
+    // Current dev machine IP: 192.168.100.43
+    private const val BASE_URL = "http://192.168.100.43:8000/"
 
     @Provides
     @Singleton
