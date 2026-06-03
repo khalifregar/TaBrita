@@ -39,40 +39,44 @@ fun Route.authRoutes(authService: AuthService) {
         }
 
         post("/verify-otp") {
-            val request = call.receive<VerifyOtpRequest>()
             try {
+                val raw = call.receiveText()
+                val request = Json.decodeFromString<VerifyOtpRequest>(raw)
                 val success = authService.verifyOtp(request.email, request.otp)
                 if (success) {
-                    call.respond(HttpStatusCode.OK, MessageResponse("OTP verified successfully. You can now login."))
+                    call.respond(HttpStatusCode.OK, """{"message":"OTP verified successfully. You can now login."}""")
                 } else {
-                    call.respond(HttpStatusCode.BadRequest, MessageResponse("Invalid or expired OTP"))
+                    call.respond(HttpStatusCode.BadRequest, """{"message":"Invalid or expired OTP"}""")
                 }
             } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, MessageResponse(e.message ?: "Verification failed"))
+                call.respond(HttpStatusCode.BadRequest, """{"message":"Verification failed: ${e.message ?: ""}"}""")
             }
         }
 
         post("/resend-otp") {
-            val request = call.receive<ResendOtpRequest>()
             try {
+                val raw = call.receiveText()
+                val request = Json.decodeFromString<ResendOtpRequest>(raw)
                 authService.resendOtp(request.email)
-                call.respond(HttpStatusCode.OK, MessageResponse("New OTP sent to ${request.email}"))
+                call.respond(HttpStatusCode.OK, """{"message":"New OTP sent to ${request.email}"}""")
             } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, MessageResponse(e.message ?: "Failed to resend OTP"))
+                call.respond(HttpStatusCode.BadRequest, """{"message":"Failed to resend OTP: ${e.message ?: ""}"}""")
             }
         }
 
         post("/login") {
-            val request = call.receive<LoginRequest>()
             try {
+                val raw = call.receiveText()
+                val request = Json.decodeFromString<LoginRequest>(raw)
                 val authResponse = authService.login(request)
-                call.respond(HttpStatusCode.OK, authResponse)
+                // For simplicity, respond as text json (AuthResponse has token)
+                call.respondText("{\"token\":\"${authResponse.token}\",\"user\":{\"id\":\"${authResponse.user.id}\",\"email\":\"${authResponse.user.email}\",\"name\":\"${authResponse.user.name}\",\"isVerified\":${authResponse.user.isVerified}}}", status = HttpStatusCode.OK)
             } catch (e: IllegalStateException) {
-                call.respond(HttpStatusCode.Forbidden, MessageResponse(e.message ?: "Login not allowed"))
+                call.respond(HttpStatusCode.Forbidden, """{"message":"${e.message ?: "Login not allowed"}"}""")
             } catch (e: IllegalArgumentException) {
-                call.respond(HttpStatusCode.Unauthorized, MessageResponse(e.message ?: "Invalid credentials"))
+                call.respond(HttpStatusCode.Unauthorized, """{"message":"${e.message ?: "Invalid credentials"}"}""")
             } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, MessageResponse("Login failed"))
+                call.respond(HttpStatusCode.BadRequest, """{"message":"Login failed: ${e.message ?: ""}"}""")
             }
         }
 
@@ -82,10 +86,7 @@ fun Route.authRoutes(authService: AuthService) {
                 val principal = call.principal<io.ktor.server.auth.jwt.JWTPrincipal>()
                 val email = principal?.getClaim("email", String::class)
                 val userId = principal?.subject
-                call.respond(
-                    HttpStatusCode.OK,
-                    MessageResponse("Hello $email (id=$userId). You are authenticated!")
-                )
+                call.respond(HttpStatusCode.OK, """{"message":"Hello $email (id=$userId). You are authenticated!"}""")
             }
         }
     }
