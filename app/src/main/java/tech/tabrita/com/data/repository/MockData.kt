@@ -136,25 +136,7 @@ object MockData {
                 ContentBlock(text = "Dalam satu bulan lagi, aturan pendaftaran untuk nomor HP baru dengan divalidasi pengenalan wajah akan berlaku. Komdigi menegaskan kebijakan SIM card biometrik face recognition.", imageUrl = null)
             )
         ),
-        Article(
-            id = "tempo-hiburan-jantung-213",
-            title = "Keluhan Penyakit Jantung yang Sering Dianggap Biasa",
-            description = "DOKTER Spesialis Jantung dan Pembuluh Darah Bethsaida Hospital Gading Serpong menjelaskan keluhan penyakit jantung yang sering dianggap biasa.",
-            thumbnailUrl = "https://statik.tempo.co/data/2025/02/04/id_1374609/1374609_720.jpg",
-            source = "tempo.co",
-            author = "Redaksi tempo.co",
-            publishedAt = Instant.parse("2026-06-02T14:24:00.031215Z"),
-            category = Category.KESEHATAN,
-            readTimeMinutes = 4,
-            url = "https://www.tempo.co/gaya-hidup/keluhan-penyakit-jantung-yang-sering-dianggap-biasa-2142479",
-            contentBlocks = listOf(
-                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/02/04/id_1374609/1374609_720.jpg"),
-                ContentBlock(text = "Ilustrasi penyakit jantung/serangan jantung. Shutterstock", imageUrl = null),
-                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/02/04/id_1374609/1374609_720.jpg"),
-                ContentBlock(text = "DOKTER Spesialis Jantung dan Pembuluh Darah Bethsaida Hospital Gading Serpong Putu Parwata menjelaskan beberapa keluhan penyakit jantung yang sering dianggap biasa oleh masyarakat.", imageUrl = null),
-                ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2025/02/04/id_1374719/1374719_720.jpg")
-            )
-        ),
+
         Article(
             id = "tempo-digital-2138706",
             title = "Setengah Anak Indonesia Terpapar Konten Seksual Media Sosial",
