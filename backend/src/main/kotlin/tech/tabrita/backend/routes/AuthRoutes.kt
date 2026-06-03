@@ -6,6 +6,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.serialization.json.Json
 import tech.tabrita.backend.dto.request.LoginRequest
 import tech.tabrita.backend.dto.request.RegisterRequest
 import tech.tabrita.backend.dto.request.ResendOtpRequest
@@ -14,20 +15,26 @@ import tech.tabrita.backend.dto.response.MessageResponse
 import tech.tabrita.backend.service.AuthService
 
 fun Route.authRoutes(authService: AuthService) {
+    post("/debug-register") {
+        call.respondText("DEBUG REGISTER ROUTE HIT - body would be here")
+    }
+
     route("/auth") {
         post("/register") {
-            val request = call.receive<RegisterRequest>()
+            call.application.log.info("=== REGISTER HANDLER HIT ===")
             try {
-                val response = authService.register(request)
-                // Since OTP sent, return message + basic user info
-                call.respond(
-                    HttpStatusCode.Created,
-                    MessageResponse("Registration successful. OTP sent to ${request.email}. Please verify to activate account.")
-                )
+                val rawBody = call.receiveText()
+                call.application.log.info("Raw body received: $rawBody")
+                val request = Json.decodeFromString<RegisterRequest>(rawBody)
+                call.application.log.info("Parsed register for ${request.email}")
+                authService.register(request)
+                call.respond(HttpStatusCode.Created, """{"message":"Registration successful. OTP sent to ${request.email}. Please verify to activate account."}""")
             } catch (e: IllegalArgumentException) {
-                call.respond(HttpStatusCode.Conflict, MessageResponse(e.message ?: "Registration failed"))
+                call.application.log.warn("Register conflict: ${e.message}")
+                call.respond(HttpStatusCode.Conflict, """{"message":"${e.message ?: "Registration failed"}"}""")
             } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, MessageResponse(e.message ?: "Error during registration"))
+                call.application.log.error("Register error", e)
+                call.respond(HttpStatusCode.BadRequest, """{"message":"Error: ${e.message ?: e::class.simpleName}"}""")
             }
         }
 

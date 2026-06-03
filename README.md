@@ -18,6 +18,21 @@
 - Hilt untuk Dependency Injection
 - Room untuk persistensi bookmark
 - Coil 3 untuk image loading
+
+## Backend (Ktor Auth API) - Monorepo
+
+Ada juga backend Kotlin Ktor di dalam monorepo sebagai subproject `:backend`.
+
+- Login, Register, OTP via Email (simulasi)
+- Pattern: Repository + Service Layer + DTO (Request/Response + Model)
+- JWT authentication
+- Lihat `backend/README.md` untuk detail endpoint dan cara menjalankan (`./gradlew :backend:run` di port 9090)
+
+Contoh:
+- POST /auth/register
+- POST /auth/verify-otp
+- POST /auth/login (dapatkan JWT)
+- GET /auth/me (protected)
 - Navigation Compose
 - Coroutines + StateFlow
 - Gradle Version Catalog + KSP

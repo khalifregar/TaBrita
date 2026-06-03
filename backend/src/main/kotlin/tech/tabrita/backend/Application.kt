@@ -44,6 +44,14 @@ fun Application.module() {
             call.respondText("TaBrita Auth API is running. Use /auth/register, /auth/login, /auth/verify-otp")
         }
 
+        post("/") {
+            call.respondText("POST root hit successfully")
+        }
+
+        post("/debug-register") {
+            call.respondText("DEBUG REGISTER IN APPLICATION - direct")
+        }
+
         authRoutes(authService)
     }
 }
