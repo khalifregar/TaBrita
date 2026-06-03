@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TaBrita"
 include(":app")
+include(":backend")

@@ -6,4 +6,6 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.googleServices) apply false
+    // For Ktor backend monorepo module
+    id("org.jetbrains.kotlin.jvm") version "2.0.21" apply false
 }
