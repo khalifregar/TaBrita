@@ -195,6 +195,33 @@ object MockData {
                 ContentBlock(text = "", imageUrl = "https://statik.tempo.co/data/2026/02/02/id_1456559/1456559_720.jpg"),
                 ContentBlock(text = "Selain itu, pemerintah juga meminta ketiga pemimpin BGN untuk memperkuat koordinasi dengan pemerintah daerah, baik pemerintah provinsi maupun kabupaten/kota, hingga memastikan seluruh program Badan Gizi Nasional dapat tetap berjalan dengan sebaik-baiknya.", imageUrl = null)
             )
+        ),
+        // Real rich from detik (enriched full article) - 12 blocks example for BISNIS
+        Article(
+            id = "detik-allianz-2025",
+            title = "Tumbuh 9,8%, Allianz Indonesia Kelola Dana Rp 43,7 T di 2025",
+            description = "Sepanjang 2025, Allianz Indonesia mencatatkan total dana kelolaan (Asset Under Management) tumbuh 9,8 persen menjadi Rp 43,7 triliun.",
+            thumbnailUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/allianz-indonesia-1780395840323_43.jpeg?w=210&q=90",
+            source = "detik.com",
+            author = "Redaksi detik.com",
+            publishedAt = Instant.parse("2026-06-02T14:24:00.031264Z"),
+            category = Category.BISNIS,
+            readTimeMinutes = 5,
+            url = "https://finance.detik.com/moneter/d-8514928/tumbuh-9-8-allianz-indonesia-kelola-dana-rp-43-7-t-di-2025",
+            contentBlocks = listOf(
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/allianz-indonesia-1780395840246.jpeg?w=800"),
+                ContentBlock(text = "Sepanjang 2025, Allianz Indonesia mencatatkan total dana kelolaan (Asset Under Management) tumbuh 9,8 persen menjadi Rp 43,7 triliun.", imageUrl = null),
+                ContentBlock(text = "\"Memasuki 2026, kami mempersiapkan strategi yang lebih selektif dengan menekankan pada kualitas dan keberlanjutan portofolio,\" ujar Presiden Direktur Allianz Life Indonesia, Bianto Surodjo.", imageUrl = null),
+                ContentBlock(text = "Bank Indonesia yang secara total memangkas suku bunga 125 bps. Dari sisi konsumsi, daya beli masyarakat masih terjaga meskipun ada tekanan dari inflasi.", imageUrl = null),
+                ContentBlock(text = "Secara global, dinamika pasar sepanjang 2025 diwarnai oleh ketidakpastian kebijakan perdagangan internasional dan fluktuasi nilai tukar.", imageUrl = null),
+                ContentBlock(text = "Kebijakan fiskal tetap ekspansif, dengan penguatan agenda hilirisasi dan peningkatan belanja infrastruktur.", imageUrl = null),
+                ContentBlock(text = "Secara global, proyeksi pertumbuhan PDB dunia masih menunjukkan ketahanan, namun risiko resesi di beberapa kawasan tetap menjadi perhatian.", imageUrl = null),
+                ContentBlock(text = "Dalam menghadapi pasar yang tetap dinamis, Allianz Indonesia tetap mengutamakan prinsip kehati-hatian dalam pengelolaan investasi.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/allianz-indonesia-1780395840246.jpeg?w=800"),
+                ContentBlock(text = "Atas kinerja dana kelolaan hingga tahun 2025, Allianz Life Indonesia meraih tujuh penghargaan di ajang Insurance Award 2026.", imageUrl = null),
+                ContentBlock(text = "Kemudian di tahun 2026, Allianz Life Indonesia mendapatkan penghargaan pada Best Life Insurance Award untuk kategori Asset Management.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/allianz-indonesia-1780395840246.jpeg?w=800")
+            )
         )
     )
 }
