@@ -222,6 +222,35 @@ object MockData {
                 ContentBlock(text = "Kemudian di tahun 2026, Allianz Life Indonesia mendapatkan penghargaan pada Best Life Insurance Award untuk kategori Asset Management.", imageUrl = null),
                 ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/allianz-indonesia-1780395840246.jpeg?w=800")
             )
+        ),
+        // Another rich detik example (14 blocks, 5 imgs) for POLITIK - from recent enrichment boost
+        Article(
+            id = "detik-banjir-dki-2026",
+            title = "Atasi Banjir DKI, Pemprov Andalkan Pompa, Pengerukan & Normalisasi Sungai",
+            description = "Pemerintah Provinsi (Pemprov) DKI Jakarta terus berupaya memerangi banjir dengan memperkuat infrastruktur pengendali banjir.",
+            thumbnailUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/pemprov-dki-1780397216503_43.jpeg?w=210&q=90",
+            source = "detik.com",
+            author = "Redaksi detik.com",
+            publishedAt = Instant.parse("2026-06-02T14:24:00.031264Z"),
+            category = Category.POLITIK,
+            readTimeMinutes = 5,
+            url = "https://news.detik.com/berita/d-8514970/atasi-banjir-dki-pemprov-andalkan-pompa-pengerukan-normalisasi-sungai",
+            contentBlocks = listOf(
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/pemprov-dki-1780397216448.jpeg?w=800"),
+                ContentBlock(text = "Pemerintah Provinsi (Pemprov) DKI Jakarta terus berupaya memerangi banjir dengan memperkuat infrastruktur pengendali banjir.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/pemprov-dki-1780397216448.jpeg?w=800"),
+                ContentBlock(text = "Pemprov DKI Jakarta memperkuat infrastruktur pengendali banjir dengan mengandalkan pompa, pengerukan, dan normalisasi sungai.", imageUrl = null),
+                ContentBlock(text = "Pemprov DKI Jakarta juga menjalankan JakTirta Project 2025-2026 untuk percepatan penanganan banjir.", imageUrl = null),
+                ContentBlock(text = "Menurut Pramono, Rumah Pompa Ancol dirancang untuk mempercepat pembuangan air ke laut.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/pemprov-dki-1780397216375.jpeg?w=800"),
+                ContentBlock(text = "Pemprov DKI Jakarta juga mempercepat pengerukan sungai, kali, dan saluran air lainnya.", imageUrl = null),
+                ContentBlock(text = "Selain pompa dan pengerukan, Pemprov DKI Jakarta menyiapkan normalisasi sungai secara bertahap.", imageUrl = null),
+                ContentBlock(text = "\"Saat ini sedang dilakukan pembangunan dan revitalisasi tanggul sungai di beberapa titik,\" ujarnya.", imageUrl = null),
+                ContentBlock(text = "\"Insyaallah nggak ada kendala dan tanggul itu bisa selesai 1-2 tahun ke depan,\" tambah Pramono.", imageUrl = null),
+                ContentBlock(text = "Ia menyebut penanganan banjir tidak bisa dilakukan secara parsial, butuh pendekatan komprehensif.", imageUrl = null),
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/pemprov-dki-1780397216448.jpeg?w=800"),
+                ContentBlock(text = "", imageUrl = "https://akcdn.detik.net.id/community/media/visual/2026/06/02/pemprov-dki-1780397216375.jpeg?w=800")
+            )
         )
     )
 }
